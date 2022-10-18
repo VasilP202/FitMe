@@ -81,3 +81,7 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# DB
+db.sqlite3
+db.sqlite3-journal
