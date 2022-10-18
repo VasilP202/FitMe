@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import date, datetime
 from typing import Optional
 
 from django.db import models
@@ -16,8 +16,21 @@ class Client(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
+        return self.first_name + " " + self.last_name + f" ({self.pk})"
+
+    @property
+    def full_name(self):
         return self.first_name + " " + self.last_name
 
     @property
     def age(self) -> Optional[int]:
-        return datetime.today() - self.birth_date
+        if self.birth_date is not None:
+            today = date.today()
+            return (
+                today.year
+                - self.birth_date.year
+                - (
+                    (today.month, today.day)
+                    < (self.birth_date.month, self.birth_date.day)
+                )
+            )
