@@ -1,12 +1,16 @@
 from datetime import date, datetime
+from secrets import choice
 from typing import Optional
 
 from django.db import models
+
+from .enums import SexOptions
 
 
 class Client(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
+    sex = models.CharField(max_length=255, choices=SexOptions.choices)
     birth_date = models.DateField(null=True, blank=True)
     phone = models.CharField(max_length=255, null=True, blank=True)
     address = models.CharField(max_length=255, null=True, blank=True)
