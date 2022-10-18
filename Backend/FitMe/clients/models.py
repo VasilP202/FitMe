@@ -1,5 +1,4 @@
-from datetime import date, datetime
-from secrets import choice
+from datetime import date
 from typing import Optional
 
 from django.db import models
