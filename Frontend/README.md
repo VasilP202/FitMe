@@ -1,10 +1,16 @@
-# Getting Started with Create React App
+# FitMe Backend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Requirements
 
-## Available Scripts
+ - NodeJS
+ - npm
 
-In the project directory, you can run:
+## Install required packages
+
+```shell
+$ cd fit_me
+$ npm install bootstrap reactstrap axios --save
+```
 
 ### `npm start`
 
