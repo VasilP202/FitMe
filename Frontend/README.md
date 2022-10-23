@@ -1,4 +1,4 @@
-# FitMe Backend
+# FitMe Frontend
 
 ## Requirements
 
