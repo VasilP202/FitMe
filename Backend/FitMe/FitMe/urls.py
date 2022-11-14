@@ -15,10 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path
-from clients import views
+from clients.views import clients_detail, clients_list
+from workouts.views import workouts_list, workout_done
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    re_path(r"^api/clients/$", views.clients_list),
-    re_path(r"^api/clients/([0-9])$", views.clients_detail),
+
+    re_path(r"^api/clients/$", clients_list),
+    re_path(r"^api/clients/([0-9])$", clients_detail),
+    re_path(r"^api/workouts/$", workouts_list),
+    re_path(r"^api/workouts/workout-done/$", workout_done),
 ]
