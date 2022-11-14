@@ -10,5 +10,6 @@ class WorkoutAdmin(admin.ModelAdmin):
         "time",
         "duration",
         "type",
+        "done",
         "description",
     ]

@@ -12,6 +12,9 @@ class Workout(models.Model):
     type = models.CharField(max_length=255, choices=WorkoutTypeOptions.choices)
     description = models.CharField(max_length=512, null=True, blank=True)
 
+    done = models.BooleanField(default=False)
+    client_came = models.BooleanField(default=False)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
