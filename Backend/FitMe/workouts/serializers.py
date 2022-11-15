@@ -15,14 +15,30 @@ class WorkoutDoneSerializer(serializers.Serializer):
     workout_done = serializers.BooleanField()
 
 
-class WorkoutSerializer(serializers.ModelSerializer):
+class GetWorkoutsSerializer(serializers.ModelSerializer):
     client_full_name = serializers.CharField(source="client.full_name")
+
     class Meta:
         model = Workout
         fields = [
             "pk",
             "client",
             "client_full_name",
+            "time",
+            "duration",
+            "type",
+            "description",
+            "done",
+            "client_came"
+        ]
+
+
+class CreateWorkoutSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Workout
+        fields = [
+            "pk",
+            "client",
             "time",
             "duration",
             "type",
