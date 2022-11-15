@@ -4,24 +4,25 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from .models import Workout
-from .serializers import WorkoutSerializer, WorkoutDoneSerializer
+from .serializers import GetWorkoutsSerializer, CreateWorkoutSerializer, WorkoutDoneSerializer
 
 
 @api_view(["GET", "POST"])
 def workouts_list(request):
     if request.method == "GET":
         workouts = Workout.objects.all()
-        serializer = WorkoutSerializer(
+        serializer = GetWorkoutsSerializer(
             workouts, context={"request": request}, many=True)
 
         return Response(serializer.data)
 
     elif request.method == "POST":
-        serializer = WorkoutSerializer(data=request.data)
+        serializer = CreateWorkoutSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(["POST"])
 def workout_done(request):
