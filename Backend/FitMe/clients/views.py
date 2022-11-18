@@ -1,7 +1,7 @@
 from django.shortcuts import render
+from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework import status
 
 from .models import Client
 from .serializers import ClientSerializer
@@ -11,8 +11,7 @@ from .serializers import ClientSerializer
 def clients_list(request):
     if request.method == "GET":
         clients = Client.objects.all()
-        serializer = ClientSerializer(
-            clients, context={"request": request}, many=True)
+        serializer = ClientSerializer(clients, context={"request": request}, many=True)
         return Response(serializer.data)
 
     if request.method == "POST":
@@ -32,7 +31,8 @@ def clients_detail(request, client_id):
 
     if request.method == "PUT":
         serializer = ClientSerializer(
-            client, data=request.data, context={"request": request})
+            client, data=request.data, context={"request": request}
+        )
         if serializer.is_valid():
             serializer.save()
             return Response(status=status.HTTP_204_NO_CONTENT)
