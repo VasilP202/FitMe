@@ -30,8 +30,6 @@ class CreateWorkoutSerializer(serializers.ModelSerializer):
             "duration",
             "type",
             "description",
-            "done",
-            "client_came",
             "exercises",
         ]
 
