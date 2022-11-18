@@ -6,6 +6,8 @@ import WorkoutsSummaryList from "./WorkoutsSummaryList";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
+import Header from "./Header"
+
 class Home extends Component {
   state = {
     workouts: [],
@@ -35,22 +37,25 @@ class Home extends Component {
   render() {
     console.log(this.state.date);
     return (
-      <Container id="home">
-        <Row>
-          <Col xs="8" sm="8">
-            <WorkoutsSummaryList
-              workouts={this.state.workouts}
-              onToggle={this.toggleWorkoutDone.bind(this)}
-            />
-          </Col>
-          <Col xs="auto" sm="auto">
-            <Calendar
-              onChange={(date) => this.setState({ date: date })}
-              value={this.state.date}
-            />
-          </Col>
-        </Row>
-      </Container>
+      <div>
+        <Header />
+        <Container id="home">
+          <Row>
+            <Col xs="8" sm="8">
+              <WorkoutsSummaryList
+                workouts={this.state.workouts}
+                onToggle={this.toggleWorkoutDone.bind(this)}
+              />
+            </Col>
+            <Col xs="auto" sm="auto">
+              <Calendar
+                onChange={(date) => this.setState({ date: date })}
+                value={this.state.date}
+              />
+            </Col>
+          </Row>
+        </Container>
+      </div>
     );
   }
 }

@@ -8,22 +8,26 @@ import {
   NavItem,
   NavLink,
   UncontrolledDropdown,
+  Dropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
   NavbarText,
 } from "reactstrap";
-
+import { FaUserAlt } from "react-icons/fa";
 class Header extends Component {
   constructor(props) {
     super(props);
 
     this.toggle = this.toggle.bind(this);
-    this.state = { isOpen: false };
+    this.state = {
+      dropdownOpen: false,
+    };
   }
+
   toggle() {
     this.setState({
-      isOpen: !this.state.isOpen,
+      dropdownOpen: !this.state.dropdownOpen,
     });
   }
   render() {
@@ -47,9 +51,7 @@ class Header extends Component {
             }}
           />
         </NavbarBrand>
-        <NavbarToggler onClick={this.toggle} />
-        <Collapse isOpen={this.state.isOpen} navbar>
-          <Nav className="me-auto" navbar>
+          <Nav navbar>
             <NavItem>
               <NavLink href="#">Clients</NavLink>
             </NavItem>
@@ -60,7 +62,22 @@ class Header extends Component {
               <NavLink href="#">Stats</NavLink>
             </NavItem>
           </Nav>
-        </Collapse>
+          <Nav className="ms-auto">
+            <Dropdown nav isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+              <DropdownToggle nav caret>
+                <FaUserAlt style={{ color: "white", fontSize: "35px" }} />
+              </DropdownToggle>
+              <DropdownMenu>
+                <DropdownItem>
+                  <NavLink href="/login">Login</NavLink>
+                </DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem>
+                  <NavLink href="/register">Register</NavLink>
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          </Nav>
       </Navbar>
     );
   }
