@@ -1,10 +1,14 @@
 from django.shortcuts import render
+from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework import status
 
 from .models import Workout
-from .serializers import GetWorkoutsSerializer, CreateWorkoutSerializer, WorkoutDoneSerializer
+from .serializers import (
+    CreateWorkoutSerializer,
+    GetWorkoutsSerializer,
+    WorkoutDoneSerializer,
+)
 
 
 @api_view(["GET", "POST"])
@@ -12,7 +16,8 @@ def workouts_list(request):
     if request.method == "GET":
         workouts = Workout.objects.all()
         serializer = GetWorkoutsSerializer(
-            workouts, context={"request": request}, many=True)
+            workouts, context={"request": request}, many=True
+        )
 
         return Response(serializer.data)
 
