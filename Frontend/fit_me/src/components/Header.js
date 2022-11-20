@@ -5,14 +5,17 @@ import {
   NavbarToggler,
   NavbarBrand,
   Nav,
-  NavItem,
   NavLink,
+  NavItem,
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
   NavbarText,
 } from "reactstrap";
+import Home from "./Home";
+import Stats from "./Stats";
+import { Link } from "react-router-dom";
 
 class Header extends Component {
   constructor(props) {
@@ -26,6 +29,7 @@ class Header extends Component {
       isOpen: !this.state.isOpen,
     });
   }
+
   render() {
     return (
       <Navbar
@@ -37,7 +41,7 @@ class Header extends Component {
         bg="dark"
         variant="dark"
       >
-        <NavbarBrand href="">
+        <NavbarBrand tag={Link} to="/">
           <img
             alt="logo"
             src="./fitme-logo.png"
@@ -51,13 +55,13 @@ class Header extends Component {
         <Collapse isOpen={this.state.isOpen} navbar>
           <Nav className="me-auto" navbar>
             <NavItem>
-              <NavLink href="#">Clients</NavLink>
+                <NavLink tag={Link} to="/" >Clients</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="#">Workouts</NavLink>
+                <NavLink tag={Link} to="/">Workouts</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="#">Stats</NavLink>
+                <NavLink tag={Link} to="/stats">Stats</NavLink>
             </NavItem>
           </Nav>
         </Collapse>
