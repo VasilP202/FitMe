@@ -10,6 +10,7 @@
 ```shell
 $ cd fit_me
 $ npm install bootstrap reactstrap axios react-calendar --save
+$ npm install react-router-dom
 ```
 
 ### `npm start`
