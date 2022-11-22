@@ -6,14 +6,22 @@ import WorkoutsSummaryList from "./WorkoutsSummaryList";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
+import Header from "./Header";
+
 class Home extends Component {
   state = {
     workouts: [],
     date: null,
   };
   componentDidMount() {
+    const tokenString = localStorage.getItem("token");
+    const accessToken = JSON.parse(tokenString)?.access;
     axios
-      .get(API_URL + "workouts/")
+      .get(API_URL + "workouts/", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
       .then((response) => this.setState({ workouts: response.data }));
   }
   toggleWorkoutDone(workout) {
@@ -25,32 +33,32 @@ class Home extends Component {
       .then(
         setTimeout(() => {
           axios.get(API_URL + "workouts/").then((response) => {
-            console.log(response);
-            console.log(this);
             this.setState({ workouts: response.data });
           });
         }, 100)
       );
   }
   render() {
-    console.log(this.state.date);
     return (
-      <Container id="home">
-        <Row>
-          <Col xs="8" sm="8">
-            <WorkoutsSummaryList
-              workouts={this.state.workouts}
-              onToggle={this.toggleWorkoutDone.bind(this)}
-            />
-          </Col>
-          <Col xs="auto" sm="auto">
-            <Calendar
-              onChange={(date) => this.setState({ date: date })}
-              value={this.state.date}
-            />
-          </Col>
-        </Row>
-      </Container>
+      <div>
+        <Header />
+        <Container id="home">
+          <Row>
+            <Col xs="8" sm="8">
+              <WorkoutsSummaryList
+                workouts={this.state.workouts}
+                onToggle={this.toggleWorkoutDone.bind(this)}
+              />
+            </Col>
+            <Col xs="auto" sm="auto">
+              <Calendar
+                onChange={(date) => this.setState({ date: date })}
+                value={this.state.date}
+              />
+            </Col>
+          </Row>
+        </Container>
+      </div>
     );
   }
 }

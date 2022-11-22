@@ -1,19 +1,29 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import "./App.css";
 import Home from "./components/Home";
-import Header from "./components/Header";
+import useToken from "./components/auth/useToken";
+import AuthService from "./components/auth/AuthService";
+import { useEffect, useState } from "react";
 import Stats from "./components/Stats";
-import { Route, Routes } from "react-router-dom";
 
 
 function App() {
-  
+  const { token, setToken } = useToken();
+  const { user, setUser } = useState([]);
+
+  if (!token) {
+    return <AuthService setToken={setToken} />;
+  }
+
   return (
     <div>
-      <Header/>
-      <Routes>
-          <Route path="/" element={<Home/>} />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
           <Route path="/stats" element={<Stats/>} />
-      </Routes>
+        </Routes>
+      </BrowserRouter>
     </div>
     );
 }

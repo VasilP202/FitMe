@@ -1,33 +1,37 @@
 import React, { Component } from "react";
 import {
-  Collapse,
   Navbar,
-  NavbarToggler,
   NavbarBrand,
   Nav,
   NavLink,
   NavItem,
-  UncontrolledDropdown,
+  Dropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  NavbarText,
 } from "reactstrap";
 import Home from "./Home";
 import Stats from "./Stats";
 import { Link } from "react-router-dom";
-
+import { FaUserAlt } from "react-icons/fa";
 class Header extends Component {
   constructor(props) {
     super(props);
 
     this.toggle = this.toggle.bind(this);
-    this.state = { isOpen: false };
+    this.state = {
+      dropdownOpen: false,
+    };
   }
+
   toggle() {
     this.setState({
-      isOpen: !this.state.isOpen,
+      dropdownOpen: !this.state.dropdownOpen,
     });
+  }
+
+  logout() {
+    localStorage.removeItem("token");
   }
 
   render() {
@@ -47,24 +51,35 @@ class Header extends Component {
             src="./fitme-logo.png"
             style={{
               height: 50,
-              width: 100,
+              width: 120,
             }}
           />
         </NavbarBrand>
-        <NavbarToggler onClick={this.toggle} />
-        <Collapse isOpen={this.state.isOpen} navbar>
-          <Nav className="me-auto" navbar>
-            <NavItem>
-                <NavLink tag={Link} to="/" >Clients</NavLink>
-            </NavItem>
-            <NavItem>
-                <NavLink tag={Link} to="/">Workouts</NavLink>
-            </NavItem>
-            <NavItem>
-                <NavLink tag={Link} to="/stats">Stats</NavLink>
-            </NavItem>
-          </Nav>
-        </Collapse>
+        <Nav navbar>
+          <NavItem>
+            <NavLink href="#">Clients</NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink href="#">Workouts</NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink href="/stats">Stats</NavLink>
+          </NavItem>
+        </Nav>
+        <Nav className="ms-auto">
+          <Dropdown nav isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+            <DropdownToggle nav caret>
+              <FaUserAlt style={{ color: "white", fontSize: "35px" }} />
+            </DropdownToggle>
+            <DropdownMenu>
+              <DropdownItem>{localStorage.getItem("username")}</DropdownItem>
+              <DropdownItem divider />
+              <DropdownItem onClickCapture={this.logout}>
+                <NavLink href="/">Log Out</NavLink>
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+        </Nav>
       </Navbar>
     );
   }
