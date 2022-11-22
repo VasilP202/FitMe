@@ -5,6 +5,8 @@ import Home from "./components/Home";
 import useToken from "./components/auth/useToken";
 import AuthService from "./components/auth/AuthService";
 import { useEffect, useState } from "react";
+import Stats from "./components/Stats";
+
 
 function App() {
   const { token, setToken } = useToken();
@@ -19,10 +21,11 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />}></Route>
+          <Route path="/stats" element={<Stats/>} />
         </Routes>
       </BrowserRouter>
     </div>
-  );
+    );
 }
 
 export default App;
