@@ -6,7 +6,7 @@ import WorkoutsSummaryList from "./WorkoutsSummaryList";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
-import Header from "./Header"
+import Header from "./Header";
 
 class Home extends Component {
   state = {
@@ -14,8 +14,14 @@ class Home extends Component {
     date: null,
   };
   componentDidMount() {
+    const tokenString = localStorage.getItem("token");
+    const accessToken = JSON.parse(tokenString)?.access;
     axios
-      .get(API_URL + "workouts/")
+      .get(API_URL + "workouts/", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
       .then((response) => this.setState({ workouts: response.data }));
   }
   toggleWorkoutDone(workout) {
@@ -27,15 +33,12 @@ class Home extends Component {
       .then(
         setTimeout(() => {
           axios.get(API_URL + "workouts/").then((response) => {
-            console.log(response);
-            console.log(this);
             this.setState({ workouts: response.data });
           });
         }, 100)
       );
   }
   render() {
-    console.log(this.state.date);
     return (
       <div>
         <Header />

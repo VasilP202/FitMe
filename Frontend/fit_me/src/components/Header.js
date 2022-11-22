@@ -1,18 +1,14 @@
 import React, { Component } from "react";
 import {
-  Collapse,
   Navbar,
-  NavbarToggler,
   NavbarBrand,
   Nav,
   NavItem,
   NavLink,
-  UncontrolledDropdown,
   Dropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  NavbarText,
 } from "reactstrap";
 import { FaUserAlt } from "react-icons/fa";
 class Header extends Component {
@@ -30,6 +26,11 @@ class Header extends Component {
       dropdownOpen: !this.state.dropdownOpen,
     });
   }
+
+  logout() {
+    localStorage.removeItem("token");
+  }
+
   render() {
     return (
       <Navbar
@@ -47,37 +48,35 @@ class Header extends Component {
             src="./fitme-logo.png"
             style={{
               height: 50,
-              width: 100,
+              width: 120,
             }}
           />
         </NavbarBrand>
-          <Nav navbar>
-            <NavItem>
-              <NavLink href="#">Clients</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="#">Workouts</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="#">Stats</NavLink>
-            </NavItem>
-          </Nav>
-          <Nav className="ms-auto">
-            <Dropdown nav isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-              <DropdownToggle nav caret>
-                <FaUserAlt style={{ color: "white", fontSize: "35px" }} />
-              </DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem>
-                  <NavLink href="/login">Login</NavLink>
-                </DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>
-                  <NavLink href="/register">Register</NavLink>
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-          </Nav>
+        <Nav navbar>
+          <NavItem>
+            <NavLink href="#">Clients</NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink href="#">Workouts</NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink href="#">Stats</NavLink>
+          </NavItem>
+        </Nav>
+        <Nav className="ms-auto">
+          <Dropdown nav isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+            <DropdownToggle nav caret>
+              <FaUserAlt style={{ color: "white", fontSize: "35px" }} />
+            </DropdownToggle>
+            <DropdownMenu>
+              <DropdownItem>{localStorage.getItem("username")}</DropdownItem>
+              <DropdownItem divider />
+              <DropdownItem onClickCapture={this.logout}>
+                <NavLink href="/">Log Out</NavLink>
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+        </Nav>
       </Navbar>
     );
   }

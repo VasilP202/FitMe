@@ -1,0 +1,46 @@
+h5 {
+  margin: 0;
+  padding: 0;
+}
+
+#auth-service-container {
+  margin: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+#brand-row {
+  margin: 30px;
+}
+
+#help-text-row {
+  margin: 0 30px;
+}
+
+#auth-options {
+  padding: 30px;
+  max-width: 60%;
+  margin: 0 auto;
+}
+
+.auth-options-row {
+  margin-bottom: 8px;
+}
+
+.auth-options-row a {
+  text-decoration: none;
+  color: rgba(33, 86, 92, 255);
+}
+.auth-options-row h5 {
+  margin: 0;
+  padding: 8px;
+}
+#login-container {
+  padding: 30px;
+  margin: 0 auto;
+}
+
+#register-container {
+  padding: 30px;
+  margin: 0 auto;
+}
