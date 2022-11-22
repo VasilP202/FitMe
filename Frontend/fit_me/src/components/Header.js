@@ -5,12 +5,18 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Dropdown,
+  UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
+
+import { Link } from "react-router-dom";
 import { FaUserAlt } from "react-icons/fa";
+
+import Home from "./Home";
+import Stats from "./Stats";
+
 class Header extends Component {
   constructor(props) {
     super(props);
@@ -42,7 +48,7 @@ class Header extends Component {
         bg="dark"
         variant="dark"
       >
-        <NavbarBrand href="">
+        <NavbarBrand tag={Link} to="/">
           <img
             alt="logo"
             src="./fitme-logo.png"
@@ -60,7 +66,9 @@ class Header extends Component {
             <NavLink href="#">Workouts</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="#">Stats</NavLink>
+            <NavLink tag={Link} to="/stats">
+              Stats
+            </NavLink>
           </NavItem>
         </Nav>
         <Nav className="ms-auto">
