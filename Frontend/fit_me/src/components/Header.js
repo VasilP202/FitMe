@@ -10,10 +10,10 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
-import Home from "./Home";
-import Stats from "./Stats";
 import { Link } from "react-router-dom";
 import { FaUserAlt } from "react-icons/fa";
+import "./Header.css";
+
 class Header extends Component {
   constructor(props) {
     super(props);
@@ -57,13 +57,13 @@ class Header extends Component {
         </NavbarBrand>
         <Nav navbar>
           <NavItem>
-            <NavLink href="#">Clients</NavLink>
+            <NavLink href="#">CLIENTS</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="#">Workouts</NavLink>
+            <NavLink href="#">WORKOUTS</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="/stats">Stats</NavLink>
+            <NavLink href="/stats">STATS</NavLink>
           </NavItem>
         </Nav>
         <Nav className="ms-auto">

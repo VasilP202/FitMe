@@ -1,9 +1,11 @@
 from django.db import models
+from workouts.managers import WorkoutQuerySet
 
 from .enums import WorkoutTypeOptions
 
 
 class Workout(models.Model):
+    trainer = models.ForeignKey("users.Trainer", on_delete=models.CASCADE)
     client = models.ForeignKey("clients.Client", on_delete=models.CASCADE)
 
     time = models.DateTimeField()
@@ -14,10 +16,12 @@ class Workout(models.Model):
     description = models.CharField(max_length=512, null=True, blank=True)
 
     done = models.BooleanField(default=False)
-    client_came = models.BooleanField(default=False)
+    client_came = models.BooleanField(null=True, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    objects = WorkoutQuerySet.as_manager()
 
     def __str__(self):
         return str(self.client) + " " + self.type

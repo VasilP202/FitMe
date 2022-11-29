@@ -7,11 +7,12 @@ from .models import Workout, WorkoutExercise
 class WorkoutAdmin(admin.ModelAdmin):
     list_display = [
         "client",
+        "trainer",
         "time",
         "duration",
         "type",
         "done",
-        "description",
+        "client_came",
     ]
 
 

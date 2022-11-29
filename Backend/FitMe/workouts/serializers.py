@@ -8,6 +8,11 @@ class WorkoutDoneSerializer(serializers.Serializer):
     workout_done = serializers.BooleanField()
 
 
+class WorkoutClientCameSerializer(serializers.Serializer):
+    workout_id = serializers.IntegerField()
+    client_came = serializers.BooleanField()
+
+
 class WorkoutExerciseSerializer(serializers.ModelSerializer):
     class Meta:
         model = WorkoutExercise
@@ -34,6 +39,7 @@ class CreateWorkoutSerializer(serializers.ModelSerializer):
         ]
 
     def create(self, validated_data):
+        # TODO add trainer-user
         if "exercises" in validated_data:
             exercises_data = validated_data.pop("exercises")
             workout = Workout.objects.create(**validated_data)
