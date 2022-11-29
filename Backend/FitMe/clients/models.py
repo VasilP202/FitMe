@@ -7,6 +7,14 @@ from .enums import SexOptions
 
 
 class Client(models.Model):
+    user = models.OneToOneField(
+        "users.User", on_delete=models.CASCADE, null=True, blank=True
+    )
+
+    trainer = models.ForeignKey(
+        "users.Trainer", related_name="clients", on_delete=models.SET_NULL, null=True
+    )
+
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     sex = models.CharField(max_length=255, choices=SexOptions.choices)

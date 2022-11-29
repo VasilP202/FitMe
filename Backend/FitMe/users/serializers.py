@@ -1,8 +1,8 @@
+from clients.models import Client
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-
-# from .models import User
+from users.models import Trainer
 
 User = get_user_model()
 
@@ -11,7 +11,6 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
-
         token["username"] = user.username
         return token
 
@@ -53,5 +52,20 @@ class RegistrationSerializer(serializers.ModelSerializer):
             is_trainer=validated_data["is_trainer"],
         )
         user.set_password(validated_data["password"])
+
+        if user.is_trainer:
+            trainer = Trainer.objects.create(user=user)
+            trainer.save()
+
+        elif user.is_client:
+            try:
+                # Trainer already added new Client
+                client = Client.objects.get(email=user.email)
+                # Bind user and client together
+                client.user = user
+                client.save()
+            except Client.DoesNotExist:
+                pass
+
         user.save()
         return user

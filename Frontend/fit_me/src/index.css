@@ -4,20 +4,32 @@
   padding: 0;
 }
 #home {
-  margin-top: 80px;
+  margin-top: 90px;
 }
 #summary {
   margin-top: 50px;
 }
-tr:first-child td:first-child { border-top-left-radius: 10px; }
-tr:first-child td:last-child { border-top-right-radius: 10px; }
+tr:first-child td:first-child {
+  border-top-left-radius: 10px;
+}
+tr:first-child td:last-child {
+  border-top-right-radius: 10px;
+}
 
-tr:last-child td:first-child { border-bottom-left-radius: 10px; }
-tr:last-child td:last-child { border-bottom-right-radius: 10px; }
+tr:last-child td:first-child {
+  border-bottom-left-radius: 10px;
+}
+tr:last-child td:last-child {
+  border-bottom-right-radius: 10px;
+}
 
-tr:first-child td { border-top-style: solid; }
-tr td:first-child { border-left-style: solid; }
-.Table{
+tr:first-child td {
+  border-top-style: solid;
+}
+tr td:first-child {
+  border-left-style: solid;
+}
+.Table {
   border-collapse: separate !important;
   border-spacing: 0 20px;
   border-radius: 10px;
@@ -27,4 +39,23 @@ tr td:first-child { border-left-style: solid; }
 }
 .workout-done {
   background-color: #59ff59;
+}
+.workout-no-client {
+  background-color: #ffcccb;
+}
+#td-client-came {
+  padding-left: 20px;
+  padding-bottom: 0;
+}
+
+.fa-icon {
+  color: red;
+  cursor: hand;
+  width: 20;
+  height: 20;
+}
+.fa-icon:hover {
+  font-size: 1.8em;
+  transition-property: all;
+  transition: 0.8s ease-out;
 }

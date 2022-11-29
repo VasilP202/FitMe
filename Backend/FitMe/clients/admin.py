@@ -7,6 +7,7 @@ from .models import Client
 class ClientAdmin(admin.ModelAdmin):
     list_display = [
         "get_full_name",
+        "trainer",
         "get_age",
         "birth_date",
         "phone",

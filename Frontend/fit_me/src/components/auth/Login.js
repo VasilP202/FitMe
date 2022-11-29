@@ -16,7 +16,7 @@ import { AUTH_URL } from "../../constants/index";
 import { useNavigate } from "react-router-dom";
 import "./AuthService.css";
 
-export async function login(username, password) {
+async function login(username, password) {
   return axios
     .post(AUTH_URL + "login/", {
       username,
@@ -28,6 +28,19 @@ export async function login(username, password) {
     })
     .catch((error) => {
       console.log("Error", error.message);
+    });
+}
+
+function setIsUserTrainer(username) {
+  return axios
+    .get(AUTH_URL + "user-is-trainer/", {
+      params: {
+        username: username,
+      },
+    })
+    .then((response) => {
+      localStorage.setItem("is_trainer", response.data["is_trainer"]);
+      return response.data;
     });
 }
 
@@ -44,6 +57,7 @@ export default function Login({ setToken }) {
     const token = await login(username, password);
     if (token) {
       setToken(token);
+      setIsUserTrainer(username);
       nav("/");
     } else {
       setErrorMsg("Login failed. Please try again.");

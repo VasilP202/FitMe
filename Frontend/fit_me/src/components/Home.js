@@ -11,13 +11,16 @@ import Header from "./Header";
 class Home extends Component {
   state = {
     workouts: [],
-    date: null,
+    datetime: new Date(),
   };
   componentDidMount() {
     const tokenString = localStorage.getItem("token");
     const accessToken = JSON.parse(tokenString)?.access;
     axios
       .get(API_URL + "workouts/", {
+        params: {
+          date: this.state.datetime,
+        },
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -25,6 +28,8 @@ class Home extends Component {
       .then((response) => this.setState({ workouts: response.data }));
   }
   toggleWorkoutDone(workout) {
+    const tokenString = localStorage.getItem("token");
+    const accessToken = JSON.parse(tokenString)?.access;
     axios
       .post(API_URL + "workouts/workout-done/", {
         workout_id: workout.pk,
@@ -32,11 +37,63 @@ class Home extends Component {
       })
       .then(
         setTimeout(() => {
-          axios.get(API_URL + "workouts/").then((response) => {
-            this.setState({ workouts: response.data });
-          });
+          axios
+            .get(API_URL + "workouts/", {
+              params: {
+                date: this.state.datetime,
+              },
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            })
+            .then((response) => {
+              this.setState({ workouts: response.data });
+            });
         }, 100)
       );
+  }
+  toggleClientCame(workout) {
+    const client_came =
+      workout.client_came === null ? false : !workout.client_came;
+
+    const tokenString = localStorage.getItem("token");
+    const accessToken = JSON.parse(tokenString)?.access;
+    axios
+      .post(API_URL + "workouts/workout-client-came/", {
+        workout_id: workout.pk,
+        client_came: client_came,
+      })
+      .then(
+        setTimeout(() => {
+          axios
+            .get(API_URL + "workouts/", {
+              params: {
+                date: this.state.datetime,
+              },
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            })
+            .then((response) => {
+              this.setState({ workouts: response.data });
+            });
+        }, 100)
+      );
+  }
+  changeDateHandler(date) {
+    this.setState({ datetime: date });
+    const tokenString = localStorage.getItem("token");
+    const accessToken = JSON.parse(tokenString)?.access;
+    axios
+      .get(API_URL + "workouts/", {
+        params: {
+          date: date,
+        },
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((response) => this.setState({ workouts: response.data }));
   }
   render() {
     return (
@@ -47,12 +104,14 @@ class Home extends Component {
             <Col xs="8" sm="8">
               <WorkoutsSummaryList
                 workouts={this.state.workouts}
-                onToggle={this.toggleWorkoutDone.bind(this)}
+                datetime={this.state.datetime}
+                onToggleWorkoutDone={this.toggleWorkoutDone.bind(this)}
+                onToggleClientCame={this.toggleClientCame.bind(this)}
               />
             </Col>
             <Col xs="auto" sm="auto">
               <Calendar
-                onChange={(date) => this.setState({ date: date })}
+                onChange={this.changeDateHandler.bind(this)}
                 value={this.state.date}
               />
             </Col>

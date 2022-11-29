@@ -15,7 +15,7 @@ def clients_list(request):
         return Response(serializer.data)
 
     if request.method == "POST":
-        serializer = ClientSerializer(data=request.data)
+        serializer = ClientSerializer(data=request.data, context={"request": request})
         if serializer.is_valid():
             serializer.save()
             return Response(status=status.HTTP_201_CREATED)
