@@ -2,20 +2,24 @@ from django.shortcuts import render
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.decorators import parser_classes
+from rest_framework.parsers import MultiPartParser, FormParser
 
 from .models import Client
-from .serializers import ClientSerializer
+from .serializers import ClientSerializer, ClientPhotoSerializer
 
 
 @api_view(["GET", "POST"])
 def clients_list(request):
     if request.method == "GET":
         clients = Client.objects.all()
-        serializer = ClientSerializer(clients, context={"request": request}, many=True)
+        serializer = ClientSerializer(
+            clients, context={"request": request}, many=True)
         return Response(serializer.data)
 
     if request.method == "POST":
-        serializer = ClientSerializer(data=request.data, context={"request": request})
+        serializer = ClientSerializer(
+            data=request.data, context={"request": request})
         if serializer.is_valid():
             serializer.save()
             return Response(status=status.HTTP_201_CREATED)
@@ -41,3 +45,14 @@ def clients_detail(request, client_id):
     if request.method == "DELETE":
         client.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(["POST"])
+@parser_classes([MultiPartParser, FormParser])
+def client_upload_photo(request):
+    if request.method == "POST":
+        serializer = ClientPhotoSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

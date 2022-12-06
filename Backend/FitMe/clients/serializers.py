@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from .models import Client
+from .models import Client, ClientPhotoSet, ClientPhoto, TestClientPhoto
 
 User = get_user_model()
 
@@ -36,3 +36,11 @@ class ClientSerializer(serializers.ModelSerializer):
 
         client.save()
         return client
+
+
+class ClientPhotoSerializer(serializers.ModelSerializer):
+    image_path = serializers.ImageField(required=False)
+
+    class Meta:
+        model = TestClientPhoto
+        fields = ["client", "image_path"]
