@@ -56,14 +56,14 @@ class Header extends Component {
           />
         </NavbarBrand>
         <Nav navbar>
-          <NavItem>
-            <NavLink href="#">CLIENTS</NavLink>
+        <NavItem>
+              <NavLink tag={Link} to="/" >Clients</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="#">WORKOUTS</NavLink>
+              <NavLink tag={Link} to="/">Workouts</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="/stats">STATS</NavLink>
+              <NavLink tag={Link} to="/stats">Stats</NavLink>
           </NavItem>
         </Nav>
         <Nav className="ms-auto">
