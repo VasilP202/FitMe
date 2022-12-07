@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Client, TestClientPhoto
+from .models import Client, ClientMeasurement, TestClientPhoto
 
 
 @admin.register(Client)
@@ -21,6 +21,15 @@ class ClientAdmin(admin.ModelAdmin):
 
     def get_age(self, obj):
         return obj.age
+
+
+@admin.register(ClientMeasurement)
+class ClientMeasurementAdmin(admin.ModelAdmin):
+    list_display = [
+        "client",
+        "date",
+        "weight",
+    ]
 
 
 @admin.register(TestClientPhoto)

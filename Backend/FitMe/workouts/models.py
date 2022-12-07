@@ -5,8 +5,12 @@ from .enums import WorkoutTypeOptions
 
 
 class Workout(models.Model):
-    trainer = models.ForeignKey("users.Trainer", on_delete=models.CASCADE)
-    client = models.ForeignKey("clients.Client", on_delete=models.CASCADE)
+    trainer = models.ForeignKey(
+        "users.Trainer", related_name="workouts", on_delete=models.CASCADE
+    )
+    client = models.ForeignKey(
+        "clients.Client", related_name="workouts", on_delete=models.CASCADE
+    )
 
     time = models.DateTimeField()
     duration = models.IntegerField(

@@ -69,3 +69,17 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
         user.save()
         return user
+
+
+class TrainerSerializer(serializers.ModelSerializer):
+    first_name = serializers.CharField(source="user.first_name")
+    last_name = serializers.CharField(source="user.last_name")
+    email = serializers.CharField(source="user.email")
+
+    class Meta:
+        model = Trainer
+        fields = [
+            "first_name",
+            "last_name",
+            "email",
+        ]
