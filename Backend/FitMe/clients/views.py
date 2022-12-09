@@ -17,8 +17,11 @@ from .serializers import (
 @api_view(["GET", "POST"])
 def clients_list(request):
     if request.method == "GET":
-        clients = Client.objects.all()  # TODO filter by trainer
-        serializer = ClientSerializer(clients, context={"request": request}, many=True)
+        print(request.user)
+        clients = Client.objects.filter(
+            trainer=request.user.trainer
+        )  # TODO filter by trainer
+        serializer = ClientSerializer(clients, many=True)
         return Response(serializer.data)
 
     if request.method == "POST":
