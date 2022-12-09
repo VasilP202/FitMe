@@ -11,7 +11,6 @@ import Stats from "./components/Stats";
 
 function App() {
   const { token, setToken } = useToken();
-  const { is_trainer, setIsTrainer } = useState();
 
   if (!token) {
     return <AuthService setToken={setToken} />;

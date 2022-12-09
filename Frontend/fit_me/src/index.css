@@ -9,6 +9,10 @@
 #summary {
   margin-top: 50px;
 }
+.react-calendar {
+  margin-top: 10px;
+  margin-left: 50px;
+}
 tr:first-child td:first-child {
   border-top-left-radius: 10px;
 }
@@ -58,4 +62,55 @@ tr td:first-child {
   font-size: 1.8em;
   transition-property: all;
   transition: 0.8s ease-out;
+}
+#forms-row {
+  padding: 30px;
+}
+.form-add-inline {
+  padding: 20px;
+}
+.form-add-inline p {
+  display: inline-block;
+  margin-left: 10px;
+  margin-bottom: 0;
+  font-size: 18px;
+  font-weight: bolder;
+}
+.form-add-icon {
+  font-size: 50px;
+  color: #21565c;
+  cursor: pointer;
+}
+.form-add-icon:hover {
+  color: #64adb5;
+  transition: 0.3s;
+}
+.workout-form-exercise {
+  margin-bottom: 5px;
+}
+#workout-form-add-exercise-icon {
+  padding: 10px;
+  font-size: 45px;
+  cursor: pointer;
+  border-radius: 2%;
+}
+#workout-form-add-exercise-icon:hover {
+  background-color: #c3d9dc;
+  transition: 0.3s;
+}
+#submit-new-workout-button {
+  margin:10px;
+}
+#workout-form-exercise-counter p {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+#remove-workout-form-icon svg{
+  margin-top: 10px;
+  padding-right: 10px;
+  float: right;
+  color: red;
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
 }

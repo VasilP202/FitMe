@@ -5,14 +5,16 @@ import { API_URL } from "../constants";
 import WorkoutsSummaryList from "./WorkoutsSummaryList";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-
 import Header from "./Header";
+import TrainerForms from "./TrainerForms";
+import ClientForms from "./ClientForms";
 
 class Home extends Component {
   state = {
     workouts: [],
     datetime: new Date(),
   };
+
   componentDidMount() {
     const tokenString = localStorage.getItem("token");
     const accessToken = JSON.parse(tokenString)?.access;
@@ -27,6 +29,7 @@ class Home extends Component {
       })
       .then((response) => this.setState({ workouts: response.data }));
   }
+
   toggleWorkoutDone(workout) {
     const tokenString = localStorage.getItem("token");
     const accessToken = JSON.parse(tokenString)?.access;
@@ -52,6 +55,7 @@ class Home extends Component {
         }, 100)
       );
   }
+
   toggleClientCame(workout) {
     const client_came =
       workout.client_came === null ? false : !workout.client_came;
@@ -80,6 +84,7 @@ class Home extends Component {
         }, 100)
       );
   }
+
   changeDateHandler(date) {
     this.setState({ datetime: date });
     const tokenString = localStorage.getItem("token");
@@ -96,10 +101,16 @@ class Home extends Component {
       .then((response) => this.setState({ workouts: response.data }));
   }
   render() {
+    let forms;
+    const isTrainer = localStorage.getItem("is_trainer");
+    if (isTrainer === "true") forms = <TrainerForms />;
+    else if (isTrainer === "false") forms = <ClientForms />;
+
     return (
       <div>
         <Header />
         <Container id="home">
+          {forms}
           <Row>
             <Col xs="8" sm="8">
               <WorkoutsSummaryList

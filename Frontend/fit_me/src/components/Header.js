@@ -37,7 +37,6 @@ class Header extends Component {
   render() {
     return (
       <Navbar
-        collapseOnSelect
         color="dark"
         dark
         expand="sm"
