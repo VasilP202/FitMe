@@ -13,11 +13,33 @@ import {
 } from 'mdb-react-ui-kit';
 import "../App.css";
 import "../Stats.css";
+import ClientForms from "./ClientForms";
+import axios from "axios";
+import { API_URL } from "../constants";
+import { Line } from 'react-chartjs-2';
+import { Chart as chartjs } from "chart.js/auto";
+
+
 class Stats extends Component {
-  render() {
+  getMeasurements() {
+    const tokenString = localStorage.getItem("token");
+    const accessToken = JSON.parse(tokenString)?.access;
+    axios
+      .get(API_URL + "clients/measurement-list/", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((response) => console.log(response.data));
+  }
+    render() {
+    let forms;
+    const isTrainer = localStorage.getItem("is_trainer");
+    if (isTrainer === "false") forms = <ClientForms />;
     return (
-      <section style={{ backgroundColor: '#fff',position: 'relative',top: '100px' }}>
+      <section style={{ backgroundColor: '#fff',position: 'relative',top: '80px' }}>
       <MDBContainer className="py-5">
+        <div style={{ backgroundColor: '#fff',position: 'relative',top: '-25px' }}>{forms}</div>
         <MDBRow>       
           <MDBCard className="mb-4">
               <MDBCardBody className="text-center">
@@ -27,12 +49,7 @@ class Stats extends Component {
                   className="rounded-circle"
                   style={{ width: '150px' }}
                   fluid />
-                <p className="text-muted mb-1">Full Stack Developer</p>
-                <p className="text-muted mb-4">Bay Area, San Francisco, CA</p>
-                <div className="d-flex justify-content-center mb-2">
-                  <MDBBtn>Follow</MDBBtn>
-                  <MDBBtn outline className="ms-1">Message</MDBBtn>
-                </div>
+                <p className="text-muted mb-1">User name</p>
               </MDBCardBody>
             </MDBCard>
 
@@ -41,7 +58,7 @@ class Stats extends Component {
                   <MDBCardBody>
                   <MDBRow>
                     <MDBCol sm="3">
-                      <MDBCardText>Full name</MDBCardText>
+                      <MDBCardText>Name</MDBCardText>
                     </MDBCol>
                     <MDBCol sm="9">
                       <MDBCardText className="text-muted"></MDBCardText>
@@ -53,23 +70,23 @@ class Stats extends Component {
                       <MDBCardText>Email</MDBCardText>
                     </MDBCol>
                     <MDBCol sm="9">
-                      <MDBCardText className="text-muted"></MDBCardText>
+                      <MDBCardText className="text-muted" />
                     </MDBCol>
                   </MDBRow>
                   <hr />
                   <MDBRow>
                     <MDBCol sm="3">
-                      <MDBCardText>Email</MDBCardText>
+                      <MDBCardText>Phone</MDBCardText>
                     </MDBCol>
                     <MDBCol sm="9">
-                      <MDBCardText className="text-muted"></MDBCardText>
+                      <MDBCardText className="text-muted">{localStorage.getItem("email")}</MDBCardText>
                     </MDBCol>
                   </MDBRow>
                   <hr />
                   </MDBCardBody>
                 </MDBCard>
               </MDBCol>
-
+              
               <MDBCol md="6">
                 <MDBCard className="mb-4 mb-md-0">
                   <MDBCardBody>
@@ -81,9 +98,35 @@ class Stats extends Component {
                       </MDBProgressBar>                      
                     </MDBProgress>
                   </MDBCardBody>
+                    <MDBCardBody className="text-center">
+                      <MDBCardImage
+                        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4.webp"
+                        alt="avatar"
+                        className="rounded-circle"
+                        style={{ width: '150px' }}
+                        fluid />
+                      <p className="text-muted mb-1">Trainer name</p>
+                    </MDBCardBody>
                 </MDBCard>
               </MDBCol>
-            
+
+              </MDBRow>
+              <MDBRow>
+
+              <MDBCard className="mb-4">
+              <MDBCardBody className="text-center">
+              <MDBCardText className="mb-1"> Weight progress</MDBCardText>
+              <Line data={{
+                        labels:[2016, 2018, 2020],
+                        datasets: [{
+                          label: "Weight",
+                          data: [80, 20, 100],
+                          borderColor: '#198722',
+                        }],
+                      }}
+                      />
+              </MDBCardBody>
+            </MDBCard>             
         </MDBRow>
       </MDBContainer>
     </section>
