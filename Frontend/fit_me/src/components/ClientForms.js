@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import { Col, Row, Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import { MdOutlineAddCircle } from "react-icons/md";
 import NewMeasurement from "./NewMeasurement";
+import NewPicture from "./NewPicture";
 
 class ClientForms extends Component {
   state = {
     modal: false,
+    modal2: false,
   };
 
   toggle = this.toggle.bind(this);
@@ -14,6 +16,14 @@ class ClientForms extends Component {
       modal: !this.state.modal,
     });
   }
+
+  toggle2 = this.toggle2.bind(this);
+  toggle2() {
+    this.setState({
+      modal2: !this.state.modal2,
+    });
+  }
+
   render() {
     return (
       <Row id="forms-row" /* className="justify-content-md-center" */>
@@ -38,11 +48,19 @@ class ClientForms extends Component {
           <div className="form-add-inline">
             <MdOutlineAddCircle
               className="form-add-icon"
-              onClick={this.toggle}
+              onClick={this.toggle2}
             />
             <p>New progress photos</p>
           </div>
-        </Col>
+        <Modal isOpen={this.state.modal2} toggle2={this.toggle2}>
+            <ModalHeader toggle2={this.toggle2}>
+              Add new picture
+            </ModalHeader>
+            <ModalBody>
+              <NewPicture toggle2={this.toggle2} />
+            </ModalBody>
+          </Modal>
+          </Col>
       </Row>
     );
   }
