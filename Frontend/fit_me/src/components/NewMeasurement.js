@@ -32,7 +32,6 @@ class NewMeasurement extends Component {
             name="time"
             type="datetime-local"
             onChange={this.changeState}
-            /* value={this.state.time} */
           />
         </FormGroup>
         <FormGroup>
@@ -42,7 +41,6 @@ class NewMeasurement extends Component {
             type="number"
             placeholder="70"
             onChange={this.changeState}
-            /* value={this.defaultIfEmpty(this.state.duration)} */
           />
         </FormGroup>
         <Button id="submit-new-workout-button">Send</Button>
