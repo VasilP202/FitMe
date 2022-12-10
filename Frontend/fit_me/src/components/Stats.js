@@ -124,9 +124,9 @@ class Stats extends Component {
                 <MDBCardBody className="text-center">
                 <MDBCardText className="mb-1">Workout stats</MDBCardText>
                 <Bar data={{
-                          labels: ["Workout count", "Workouts done", "Workouts missed", "Workouts this month"],
+                          labels: ["All workouts", "Workouts done", "Workouts missed", "Workouts this month"],
                           datasets: [{
-                            label: "Counts",
+                            label: "Count",
                             data: [this.state.workouts.workouts_count, this.state.workouts.workouts_count-this.state.workouts.workouts_absent_count,this.state.workouts.workouts_absent_count, this.state.workouts.workouts_three_months_count],
                             backgroundColor: ['#bababa', '#198722', '#f44336', '#ffd966'],
                           }],
