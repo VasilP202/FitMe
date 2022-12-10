@@ -16,13 +16,14 @@ import "../Stats.css";
 import ClientForms from "./ClientForms";
 import axios from "axios";
 import { API_URL } from "../constants";
-import { Line } from 'react-chartjs-2';
+import { Line, Bar } from 'react-chartjs-2';
 import { Chart as chartjs } from "chart.js/auto";
 
 
 class Stats extends Component {
   state = {
     measurements: [],
+    workouts: [],
   };
 
   componentDidMount() {
@@ -37,7 +38,16 @@ class Stats extends Component {
       .then((response) => {
         this.setState({ measurements: response.data });
       });
-  
+
+      axios
+      .get(API_URL + "clients/workout-stats/", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((response) => {
+        this.setState({ workouts: response.data });
+      });
     }
     render() {
     let forms;
@@ -96,16 +106,8 @@ class Stats extends Component {
               
               <MDBCol md="6">
                 <MDBCard className="mb-4 mb-md-0">
-                  <MDBCardBody>
-                    <MDBCardText className="mb-2">Stats</MDBCardText>
-                    <MDBCardText className="mb-1" style={{ fontSize: '0.9rem' }}>Successful trainings</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar bgColor='success' width={80} valuemin={0} valuemax={100}>
-                          80 
-                      </MDBProgressBar>                      
-                    </MDBProgress>
-                  </MDBCardBody>
                     <MDBCardBody className="text-center">
+                    <MDBCardText className="mb-1">My trainer</MDBCardText>
                       <MDBCardImage
                         src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4.webp"
                         alt="avatar"
@@ -116,25 +118,39 @@ class Stats extends Component {
                     </MDBCardBody>
                 </MDBCard>
               </MDBCol>
-
-              </MDBRow>
-              <MDBRow>
-
+            </MDBRow>
+            <MDBRow>
               <MDBCard className="mb-4">
-              <MDBCardBody className="text-center">
-              <MDBCardText className="mb-1"> Weight progress</MDBCardText>
-              <Line data={{
-                        labels: this.state.measurements.map((measurement) => (measurement.date)),
-                        datasets: [{
-                          label: "Weight (kg)",
-                          data: this.state.measurements.map((measurement) => (measurement.weight)),
-                          borderColor: '#198722',
-                        }],
-                      }}
-                      />
-              </MDBCardBody>
-            </MDBCard>             
-        </MDBRow>
+                <MDBCardBody className="text-center">
+                <MDBCardText className="mb-1">Workout stats</MDBCardText>
+                <Bar data={{
+                          labels: ["Workout count", "Workouts done", "Workouts missed", "Workouts this month"],
+                          datasets: [{
+                            label: "Counts",
+                            data: [this.state.workouts.workouts_count, this.state.workouts.workouts_count-this.state.workouts.workouts_absent_count,this.state.workouts.workouts_absent_count, this.state.workouts.workouts_three_months_count],
+                            backgroundColor: ['#bababa', '#198722', '#f44336', '#ffd966'],
+                          }],
+                        }}
+                        />
+                </MDBCardBody>
+              </MDBCard>             
+          </MDBRow>
+            <MDBRow>
+              <MDBCard className="mb-4">
+                <MDBCardBody className="text-center">
+                <MDBCardText className="mb-1">Weight progress</MDBCardText>
+                <Line data={{
+                          labels: this.state.measurements.map((measurement) => (measurement.date)),
+                          datasets: [{
+                            label: "Weight (kg)",
+                            data: this.state.measurements.map((measurement) => (measurement.weight)),
+                            borderColor: '#198722',
+                          }],
+                        }}
+                        />
+                </MDBCardBody>
+              </MDBCard>             
+          </MDBRow>
       </MDBContainer>
     </section>
       );
