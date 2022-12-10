@@ -30,6 +30,7 @@ class NewPicture extends Component {
           <Input
             name="file"
             type="file"
+            accept=".jpg, .jpeg, .png"
             onChange={this.changeState}
           />
         </FormGroup>
