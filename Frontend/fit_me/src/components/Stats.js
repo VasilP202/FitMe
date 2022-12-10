@@ -21,7 +21,11 @@ import { Chart as chartjs } from "chart.js/auto";
 
 
 class Stats extends Component {
-  getMeasurements() {
+  state = {
+    measurements: [],
+  };
+
+  componentDidMount() {
     const tokenString = localStorage.getItem("token");
     const accessToken = JSON.parse(tokenString)?.access;
     axios
@@ -30,8 +34,11 @@ class Stats extends Component {
           Authorization: `Bearer ${accessToken}`,
         },
       })
-      .then((response) => console.log(response.data));
-  }
+      .then((response) => {
+        this.setState({ measurements: response.data });
+      });
+  
+    }
     render() {
     let forms;
     const isTrainer = localStorage.getItem("is_trainer");
@@ -117,10 +124,10 @@ class Stats extends Component {
               <MDBCardBody className="text-center">
               <MDBCardText className="mb-1"> Weight progress</MDBCardText>
               <Line data={{
-                        labels:[2016, 2018, 2020],
+                        labels: this.state.measurements.map((measurement) => (measurement.date)),
                         datasets: [{
-                          label: "Weight",
-                          data: [80, 20, 100],
+                          label: "Weight (kg)",
+                          data: this.state.measurements.map((measurement) => (measurement.weight)),
                           borderColor: '#198722',
                         }],
                       }}
