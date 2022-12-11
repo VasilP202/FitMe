@@ -20,14 +20,14 @@ class NewWorkoutForm extends Component {
     clients: [],
     clientId: 0,
     time: "",
-    duration: "",
+    duration: 0,
     workoutType: "",
     exercises: [
       {
         name: "",
         num_of_sets: 0,
         num_of_reps: 0,
-        description: null,
+        description: "",
       },
     ],
   };
@@ -50,6 +50,33 @@ class NewWorkoutForm extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  addNewWorkout = (e) => {
+    e.preventDefault();
+
+    if (
+      this.state.exercises.length() > 0 &&
+      this.state.exercises[0]["name"] != ""
+    ) {
+      const exercises = this.state.exercises;
+    console.log(exercises);
+
+    } else {
+      const exercises = [];
+      console.log(exercises);
+    }
+
+
+    /* axios.post(API_URL + "workouts/", {
+      client: this.state.clientId,
+      time: this.state.time,
+      exercises: this.state.exercises,
+    });
+
+    console.log(this.state); */
+
+    //this.props.toggle();
+  };
+
   changeStateWorkoutClient = (e) => {
     const index = e.target.selectedIndex;
     const el = e.target.childNodes[index];
@@ -58,23 +85,12 @@ class NewWorkoutForm extends Component {
     this.setState({ clientId: parseInt(option) });
   };
 
-  addNewWorkout = (e) => {};
-
-  /* changeFormDate(formTime) {
-    this.setState({ time: formTime });
-    console.log(this.state);
-  }
- */
-
-  /*  defaultIfEmpty = (value) => {
-    return value === "" ? "" : value;
-  }; */
   handleAddNewExercise = () => {
     const newExercise = {
-      name: "leg press",
-      num_of_sets: null,
-      num_of_reps: null,
-      description: null,
+      name: "",
+      num_of_sets: 0,
+      num_of_reps: 0,
+      description: "",
     };
     this.setState({ exercises: [...this.state.exercises, newExercise] });
   };
@@ -84,9 +100,8 @@ class NewWorkoutForm extends Component {
     const exercises = [...this.state.exercises];
     exercises[i][name] = value;
     this.setState({ exercises: exercises });
-
-    console.log(this.state.exercises);
   }
+
   handleRemoveExercise(i) {
     const exercises = [...this.state.exercises];
     exercises.splice(i, 1);
@@ -100,6 +115,7 @@ class NewWorkoutForm extends Component {
           <Input
             name="clientChosen"
             type="select"
+            required
             onChange={this.changeStateWorkoutClient}
           >
             <option value="" selected disabled hidden>
@@ -117,6 +133,7 @@ class NewWorkoutForm extends Component {
           <Input
             name="time"
             type="datetime-local"
+            required
             onChange={this.changeState}
             /* value={this.state.time} */
           />
@@ -133,7 +150,12 @@ class NewWorkoutForm extends Component {
         </FormGroup>
         <FormGroup>
           <Label>Type:</Label>
-          <Input name="workoutType" type="select" onChange={this.changeState}>
+          <Input
+            name="workoutType"
+            type="select"
+            required
+            onChange={this.changeState}
+          >
             <option value="" selected disabled hidden>
               Select workout type
             </option>
@@ -144,7 +166,7 @@ class NewWorkoutForm extends Component {
         </FormGroup>
         <legend>Exercises:</legend>
         {this.state.exercises.map((x, i) => (
-          <div class="workout-form-exercise">
+          <div className="workout-form-exercise">
             <Row>
               <Col id="workout-form-exercise-counter">
                 <p>{i + 1}.</p>
