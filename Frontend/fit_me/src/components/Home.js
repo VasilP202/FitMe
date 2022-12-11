@@ -6,6 +6,7 @@ import WorkoutsSummaryList from "./WorkoutsSummaryList";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import TrainerForms from "./TrainerForms";
+import ClientForms from "./ClientForms";
 
 class Home extends Component {
   state = {
@@ -102,6 +103,7 @@ class Home extends Component {
     let forms;
     const isTrainer = localStorage.getItem("is_trainer");
     if (isTrainer === "true") forms = <TrainerForms />;
+    forms = <ClientForms />;
     return (
       <div>
         <Container id="home">
