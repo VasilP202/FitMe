@@ -37,7 +37,8 @@ def workouts_list(request):
         return Response(serializer.data)
 
     elif request.method == "POST":
-        serializer = CreateWorkoutSerializer(data=request.data)
+        serializer = CreateWorkoutSerializer(
+            data=request.data, context={"request": request})
         if serializer.is_valid():
             serializer.save()
             return Response(status=status.HTTP_201_CREATED)
