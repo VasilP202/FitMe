@@ -5,9 +5,8 @@ import Home from "./components/Home";
 import useToken from "./components/auth/useToken";
 import AuthService from "./components/auth/AuthService";
 import Header from "./components/Header";
-import { useState } from "react";
 import Stats from "./components/Stats";
-
+import Clients from "./components/Clients";
 
 function App() {
   const { token, setToken } = useToken();
@@ -23,6 +22,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/stats" element={<Stats />} />
+          <Route path="/clients" element={<Clients/>} />
         </Routes>
       </BrowserRouter>
     </div>
