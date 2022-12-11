@@ -1,8 +1,7 @@
-from django.conf import settings
-from django.conf.urls.static import static
-from django.urls import include, path, re_path
+from django.urls import path
 
 from .views import (
+    client_personal_info,
     client_upload_photo,
     clients_detail,
     clients_list,
@@ -18,4 +17,5 @@ urlpatterns = [
     ),
     path("workout-stats/", workout_client_stats, name="client-workout-stats"),
     path("measurement-list/", measurement_list, name="measurement-list"),
+    path("personal-info/", client_personal_info, name="client-personal-info"),
 ]
