@@ -24,6 +24,7 @@ class Stats extends Component {
   state = {
     measurements: [],
     workouts: [],
+    personalInfo: [],
   };
 
   componentDidMount() {
@@ -48,11 +49,29 @@ class Stats extends Component {
       .then((response) => {
         this.setState({ workouts: response.data });
       });
+
+      axios
+      .get(API_URL + "clients/personal-info/", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((response) => {
+        this.setState({ personalInfo: response.data });
+      });
+
     }
     render() {
     let forms;
+    let whoIS;
     const isTrainer = localStorage.getItem("is_trainer");
-    if (isTrainer === "false") forms = <ClientForms />;
+    if (isTrainer === "false") {
+      forms = <ClientForms />;
+      whoIS = "CLIENT";
+    }
+    else {
+      whoIS = "TRAINER";
+    }
     return (
       <section style={{ backgroundColor: '#fff',position: 'relative',top: '80px' }}>
       <MDBContainer className="py-5">
@@ -66,7 +85,8 @@ class Stats extends Component {
                   className="rounded-circle"
                   style={{ width: '150px' }}
                   fluid />
-                <p className="text-muted mb-1">User name</p>
+                <p className="text-muted mb-1">{ whoIS }</p>
+                <p className="text-muted mb-1">{ localStorage.getItem("username")}</p>
               </MDBCardBody>
             </MDBCard>
 
@@ -75,35 +95,43 @@ class Stats extends Component {
                   <MDBCardBody>
                   <MDBRow>
                     <MDBCol sm="3">
-                      <MDBCardText>Name</MDBCardText>
+                      <MDBCardText>Name:</MDBCardText>
                     </MDBCol>
                     <MDBCol sm="9">
-                      <MDBCardText className="text-muted"></MDBCardText>
+                      <MDBCardText className="text-muted">{this.state.personalInfo.first_name + " " + this.state.personalInfo.last_name}</MDBCardText>
                     </MDBCol>
                   </MDBRow>
                   <hr />
                   <MDBRow>
                     <MDBCol sm="3">
-                      <MDBCardText>Email</MDBCardText>
+                      <MDBCardText>Email:</MDBCardText>
                     </MDBCol>
                     <MDBCol sm="9">
-                      <MDBCardText className="text-muted" />
+                      <MDBCardText className="text-muted">{this.state.personalInfo.email}</MDBCardText>
                     </MDBCol>
                   </MDBRow>
                   <hr />
                   <MDBRow>
                     <MDBCol sm="3">
-                      <MDBCardText>Phone</MDBCardText>
+                      <MDBCardText>Phone:</MDBCardText>
                     </MDBCol>
                     <MDBCol sm="9">
-                      <MDBCardText className="text-muted">{localStorage.getItem("email")}</MDBCardText>
+                      <MDBCardText className="text-muted">{this.state.personalInfo.phone}</MDBCardText>
+                    </MDBCol>
+                  </MDBRow>
+                  <hr />
+                  <MDBRow>
+                    <MDBCol sm="3">
+                      <MDBCardText>Address:</MDBCardText>
+                    </MDBCol>
+                    <MDBCol sm="9">
+                      <MDBCardText className="text-muted">{this.state.personalInfo.address}</MDBCardText>
                     </MDBCol>
                   </MDBRow>
                   <hr />
                   </MDBCardBody>
                 </MDBCard>
               </MDBCol>
-              
               <MDBCol md="6">
                 <MDBCard className="mb-4 mb-md-0">
                     <MDBCardBody className="text-center">
@@ -114,7 +142,7 @@ class Stats extends Component {
                         className="rounded-circle"
                         style={{ width: '150px' }}
                         fluid />
-                      <p className="text-muted mb-1">Trainer name</p>
+                      <p className="text-muted mb-1">{this.state.personalInfo.phone}</p>
                     </MDBCardBody>
                 </MDBCard>
               </MDBCol>
