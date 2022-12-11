@@ -106,3 +106,10 @@ def measurement_list(request):
                 serializer.save()
                 return Response(status=status.HTTP_201_CREATED)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["GET"])
+def client_personal_info(request):
+    if request.method == "GET":
+        serializer = GetClientSerializer(request.user.client)
+        return Response(serializer.data)
