@@ -39,17 +39,18 @@ class CreateWorkoutSerializer(serializers.ModelSerializer):
         ]
 
     def create(self, validated_data):
-        # TODO add trainer-user
+        trainer = self.context["request"].user.trainer
+
         if "exercises" in validated_data:
             exercises_data = validated_data.pop("exercises")
-            workout = Workout.objects.create(**validated_data)
+            workout = Workout.objects.create(trainer=trainer, **validated_data)
             for exercise_data in exercises_data:
                 exercise = WorkoutExercise.objects.create(
                     workout=workout, **exercise_data
                 )
                 exercise.save()
         else:
-            workout = Workout.objects.create(**validated_data)
+            workout = Workout.objects.create(trainer=trainer, **validated_data)
 
         workout.save()
         return workout

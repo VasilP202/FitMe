@@ -20,14 +20,14 @@ class NewWorkoutForm extends Component {
     clients: [],
     clientId: 0,
     time: "",
-    duration: 0,
+    duration: null,
     workoutType: "",
     exercises: [
       {
         name: "",
-        num_of_sets: 0,
-        num_of_reps: 0,
-        description: "",
+        num_of_sets: null,
+        num_of_reps: null,
+        description: null,
       },
     ],
   };
@@ -53,28 +53,25 @@ class NewWorkoutForm extends Component {
   addNewWorkout = (e) => {
     e.preventDefault();
 
-    if (
-      this.state.exercises.length() > 0 &&
-      this.state.exercises[0]["name"] != ""
-    ) {
-      const exercises = this.state.exercises;
-    console.log(exercises);
-
-    } else {
-      const exercises = [];
-      console.log(exercises);
-    }
-
-
-    /* axios.post(API_URL + "workouts/", {
+    let data = {
       client: this.state.clientId,
       time: this.state.time,
-      exercises: this.state.exercises,
-    });
+      type: this.state.workoutType,
+      duration: this.state.duration,
+    };
 
-    console.log(this.state); */
-
-    //this.props.toggle();
+    let exercises = this.state.exercises;
+    if (exercises.length > 0 && exercises[0]["name"] != "") {
+      data["exercises"] = exercises;
+    }
+    const tokenString = localStorage.getItem("token");
+    const accessToken = JSON.parse(tokenString)?.access;
+    axios
+      .post(API_URL + "workouts/", data, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+      .then(this.props.toggle());
+    window.location.reload(false);
   };
 
   changeStateWorkoutClient = (e) => {
@@ -88,9 +85,9 @@ class NewWorkoutForm extends Component {
   handleAddNewExercise = () => {
     const newExercise = {
       name: "",
-      num_of_sets: 0,
-      num_of_reps: 0,
-      description: "",
+      num_of_sets: null,
+      num_of_reps: null,
+      description: null,
     };
     this.setState({ exercises: [...this.state.exercises, newExercise] });
   };
@@ -98,7 +95,9 @@ class NewWorkoutForm extends Component {
   handleChangeExercise(e, i) {
     const { name, value } = e.target;
     const exercises = [...this.state.exercises];
-    exercises[i][name] = value;
+    if (name == "num_of_sets" || name == "num_of_reps")
+      exercises[i][name] = parseInt(value);
+    else exercises[i][name] = value;
     this.setState({ exercises: exercises });
   }
 
@@ -179,6 +178,7 @@ class NewWorkoutForm extends Component {
               <FormGroup>
                 <Label>Exercise name:</Label>
                 <Input
+                  required
                   name="name"
                   type="text"
                   onChange={(e) => this.handleChangeExercise(e, i)}

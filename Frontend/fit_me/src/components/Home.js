@@ -103,7 +103,7 @@ class Home extends Component {
     let forms;
     const isTrainer = localStorage.getItem("is_trainer");
     if (isTrainer === "true") forms = <TrainerForms />;
-    forms = <ClientForms />;
+    else forms = <ClientForms />;
     return (
       <div>
         <Container id="home">
