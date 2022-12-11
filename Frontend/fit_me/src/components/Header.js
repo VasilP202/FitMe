@@ -56,7 +56,7 @@ class Header extends Component {
         </NavbarBrand>
         <Nav navbar>
         <NavItem>
-              <NavLink tag={Link} to="/" >Clients</NavLink>
+              <NavLink tag={Link} to="/clients" >Clients</NavLink>
           </NavItem>
           <NavItem>
               <NavLink tag={Link} to="/">Workouts</NavLink>

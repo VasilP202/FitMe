@@ -5,7 +5,6 @@ import { API_URL } from "../constants";
 import WorkoutsSummaryList from "./WorkoutsSummaryList";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import Header from "./Header";
 import TrainerForms from "./TrainerForms";
 import ClientForms from "./ClientForms";
 
@@ -104,11 +103,9 @@ class Home extends Component {
     let forms;
     const isTrainer = localStorage.getItem("is_trainer");
     if (isTrainer === "true") forms = <TrainerForms />;
-    else if (isTrainer === "false") forms = <ClientForms />;
-
+    forms = <ClientForms />;
     return (
       <div>
-        <Header />
         <Container id="home">
           {forms}
           <Row>
