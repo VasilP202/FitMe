@@ -1,11 +1,28 @@
-import { Component } from "react";
-import { API_URL, AUTH_URL } from "../constants";
+import React, { Component } from "react";
+import {
+  MDBCol,
+  MDBContainer,
+  MDBRow,
+  MDBCard,
+  MDBCardText,
+  MDBCardBody,
+  MDBCardImage,
+  MDBBtn,
+  MDBProgress,
+  MDBProgressBar,
+} from 'mdb-react-ui-kit';
+import "../App.css";
+import "../Stats.css";
+import ClientForms from "./ClientForms";
 import axios from "axios";
+import { API_URL,AUTH_URL } from "../constants";
+import { Line, Bar } from 'react-chartjs-2';
+import { Chart as chartjs } from "chart.js/auto";
 
 class TrainerStats extends Component {
   state = {
-    trainerInfo: {},
-    stats: {},
+    trainerInfo: [],
+    stats: [],
   };
 
   componentDidMount() {
@@ -34,8 +51,82 @@ class TrainerStats extends Component {
   }
 
   render() {
+    let whoIS;
+    const isTrainer = localStorage.getItem("is_trainer");
+    if (isTrainer === "false") {
+      whoIS = "CLIENT";
+    }
+    else {
+      whoIS = "TRAINER";
+    }
     console.log(this.state);
-    return "trainer stats";
+    return (
+      <section style={{ backgroundColor: '#fff',position: 'relative',top: '80px' }}>
+      <MDBContainer className="py-5">
+        <MDBRow>       
+          <MDBCard className="mb-4">
+              <MDBCardBody className="text-center">
+                <MDBCardImage
+                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                  alt="avatar"
+                  className="rounded-circle"
+                  style={{ width: '150px' }}
+                  fluid />
+                <p className="text-muted mb-1">{ whoIS }</p>
+                <p className="text-muted mb-1">{ localStorage.getItem("username")}</p>
+              </MDBCardBody>
+            </MDBCard>
+
+              <MDBCol md="6">
+                <MDBCard className="mb-4 mb-md-0">
+                  <MDBCardBody>
+                  <MDBRow>
+                    <MDBCol sm="3">
+                      <MDBCardText>Email:</MDBCardText>
+                    </MDBCol>
+                    <MDBCol sm="9">
+                      <MDBCardText className="text-muted">{this.state.trainerInfo.email}</MDBCardText>
+                    </MDBCol>
+                  </MDBRow>
+                  <hr />
+                  </MDBCardBody>
+                </MDBCard>
+              </MDBCol>
+              <MDBCol md="6">
+                <MDBCard className="mb-4 mb-md-0">
+                  <MDBCardBody>
+                  <MDBRow>
+                    <MDBCol sm="3">
+                      <MDBCardText>Email:</MDBCardText>
+                    </MDBCol>
+                    <MDBCol sm="9">
+                      <MDBCardText className="text-muted">{this.state.trainerInfo.email}</MDBCardText>
+                    </MDBCol>
+                  </MDBRow>
+                  <hr />
+                  </MDBCardBody>
+                </MDBCard>
+              </MDBCol>
+            </MDBRow>
+            <MDBRow>
+              <MDBCard className="mb-4">
+                <MDBCardBody className="text-center">
+                <MDBCardText className="mb-1">Trainer stats</MDBCardText>
+                <Bar data={{
+                          labels: ["My clients count", "Male clients", "Female clients", "Clients last month"],
+                          datasets: [{
+                            label: "Count",
+                            data: [this.state.stats.clients_count, this.state.stats.clients_male_count, this.state.stats.clients_female_count, this.state.stats.clients_last_month_count],
+                            backgroundColor: ['#bababa', '#198722', '#f44336', '#ffd966'],
+                          }],
+                        }}
+                        />
+                </MDBCardBody>
+              </MDBCard>             
+          </MDBRow>
+      </MDBContainer>
+    </section>
+    );
   }
 }
 

@@ -122,10 +122,10 @@ class Stats extends Component {
                   <hr />
                   <MDBRow>
                     <MDBCol sm="3">
-                      <MDBCardText>Address:</MDBCardText>
+                      <MDBCardText>Birth:</MDBCardText>
                     </MDBCol>
                     <MDBCol sm="9">
-                      <MDBCardText className="text-muted">{this.state.personalInfo.address}</MDBCardText>
+                      <MDBCardText className="text-muted">{this.state.personalInfo.birth_date}</MDBCardText>
                     </MDBCol>
                   </MDBRow>
                   <hr />
