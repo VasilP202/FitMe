@@ -59,6 +59,7 @@ export default function Login({ setToken }) {
       setToken(token);
       setIsUserTrainer(username);
       nav("/");
+      window.location.reload(false);
     } else {
       setErrorMsg("Login failed. Please try again.");
     }
