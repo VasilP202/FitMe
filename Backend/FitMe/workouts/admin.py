@@ -13,6 +13,8 @@ class WorkoutAdmin(admin.ModelAdmin):
         "type",
         "done",
         "client_came",
+        "created_at",
+        "updated_at",
     ]
 
 
