@@ -225,7 +225,7 @@ class NewWorkoutForm extends Component {
             onClick={this.handleAddNewExercise}
           />
         </Row>
-        <Button id="submit-new-workout-button">Send</Button>
+        <Button id="submit-new-workout-button">Submit</Button>
       </Form>
     );
   }

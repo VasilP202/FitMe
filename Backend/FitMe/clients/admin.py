@@ -7,11 +7,11 @@ from .models import Client, ClientMeasurement, TestClientPhoto
 class ClientAdmin(admin.ModelAdmin):
     list_display = [
         "get_full_name",
+        "user",
         "trainer",
         "get_age",
         "birth_date",
         "phone",
-        "address",
         "email",
         "created_at",
     ]

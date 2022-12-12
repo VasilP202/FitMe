@@ -1,36 +1,47 @@
 import React, { Component } from "react";
-import { Col, Row, Button, Modal, ModalHeader, ModalBody } from "reactstrap";
+import { Col, Row, Modal, ModalHeader, ModalBody } from "reactstrap";
 import { MdOutlineAddCircle } from "react-icons/md";
 import NewWorkoutForm from "./NewWorkoutForm";
+import NewClientForm from "./NewClientForm";
 
 class TrainerForms extends Component {
   state = {
-    modal: false,
+    modalWorkoutForm: false,
+    modalClientForm: false,
   };
 
-  toggle = this.toggle.bind(this);
-  toggle() {
+  toggleWorkoutForm = this.toggleWorkoutForm.bind(this);
+  toggleClientForm = this.toggleClientForm.bind(this);
+
+  toggleWorkoutForm() {
     this.setState({
-      modal: !this.state.modal,
+      modalWorkoutForm: !this.state.modalWorkoutForm,
     });
   }
+
+  toggleClientForm() {
+    this.setState({
+      modalClientForm: !this.state.modalClientForm,
+    });
+  }
+
   render() {
     return (
-      <Row id="forms-row" /* className="justify-content-md-center" */>
+      <Row id="forms-row">
         <Col xs="4" sm="4">
           <div className="form-add-inline">
             <MdOutlineAddCircle
               className="form-add-icon"
-              onClick={this.toggle}
+              onClick={this.toggleWorkoutForm}
             />
             <p>New workout</p>
           </div>
-          <Modal isOpen={this.state.modal} toggle={this.toggle}>
-            <ModalHeader toggle={this.toggle}>
+          <Modal isOpen={this.state.modalWorkoutForm} toggle={this.toggleWorkoutForm}>
+            <ModalHeader toggle={this.toggleWorkoutForm}>
               Schedule new training session with your client
             </ModalHeader>
             <ModalBody>
-              <NewWorkoutForm toggle={this.toggle} />
+              <NewWorkoutForm toggle={this.toggleWorkoutForm} />
             </ModalBody>
           </Modal>
         </Col>
@@ -38,10 +49,16 @@ class TrainerForms extends Component {
           <div className="form-add-inline">
             <MdOutlineAddCircle
               className="form-add-icon"
-              onClick={this.toggle}
+              onClick={this.toggleClientForm}
             />
-            <p>Add new client</p>
+            <p>New client</p>
           </div>
+          <Modal isOpen={this.state.modalClientForm} toggle={this.toggleClientForm}>
+            <ModalHeader toggle={this.toggleClientForm}>Add new client</ModalHeader>
+            <ModalBody>
+              <NewClientForm toggle={this.toggleClientForm} />
+            </ModalBody>
+          </Modal>
         </Col>
       </Row>
     );
