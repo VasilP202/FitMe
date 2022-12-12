@@ -59,30 +59,30 @@ class Client(models.Model):
         now = datetime.now()
         month_first = datetime(month=now.month, year=now.year, day=1)
         return self.workouts.filter(
-            updated_at__gte=month_first, client_came=True
+            updated_at__gte=month_first
         ).count()
 
     def get_workouts_count_three_months(self) -> int:
         months_three = datetime.now() - relativedelta(months=3)
         return self.workouts.filter(
-            updated_at__gte=months_three, client_came=True
+            updated_at__gte=months_three
         ).count()
 
     def get_workouts_count_six_months(self) -> int:
         months_six = datetime.now() - relativedelta(months=6)
         return self.workouts.filter(
-            updated_at__gte=months_six, client_came=True
+            updated_at__gte=months_six
         ).count()
 
     def get_workouts_count_year(self) -> int:
         months_twelve = datetime.now() - relativedelta(months=12)
         return self.workouts.filter(
-            updated_at__gte=months_twelve, client_came=True
+            updated_at__gte=months_twelve
         ).count()
 
     def get_annotate_by_workout_type(self) -> "WorkoutQuerySet":
         return (
-            self.workouts.filter(client_came=True)
+            self.workouts.filter()
             .values("type")
             .annotate(count=Count("type"))
         )

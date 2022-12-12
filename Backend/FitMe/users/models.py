@@ -111,7 +111,7 @@ class Trainer(models.Model):
 
     def get_annotate_by_workout_type(self) -> "WorkoutQuerySet":
         return (
-            self.workouts.filter(client_came=True)
+            self.workouts.filter()
             .values("type")
             .annotate(count=Count("type"))
         )
