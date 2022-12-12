@@ -5,6 +5,7 @@ import Home from "./components/Home";
 import useToken from "./components/auth/useToken";
 import AuthService from "./components/auth/AuthService";
 import Header from "./components/Header";
+import ClientHeader from "./components/ClientHeader";
 import Stats from "./components/Stats";
 import TrainerStats from "./components/TrainerStats";
 import Clients from "./components/Clients";
@@ -24,7 +25,7 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-        <Header />
+        {getUserIsTrainer() == "true" ? <Header /> : <ClientHeader />}
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route
