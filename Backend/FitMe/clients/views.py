@@ -17,9 +17,7 @@ from .serializers import (
 @api_view(["GET", "POST"])
 def clients_list(request):
     if request.method == "GET":
-        clients = Client.objects.filter(
-            trainer=request.user.trainer
-        )
+        clients = Client.objects.filter(trainer=request.user.trainer)
         serializer = ClientSerializer(clients, many=True)
         return Response(serializer.data)
 

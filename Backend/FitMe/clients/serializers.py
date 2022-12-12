@@ -23,7 +23,6 @@ class ClientSerializer(serializers.ModelSerializer):
             "sex",
             "birth_date",
             "phone",
-            "address",
             "email",
         ]
 
@@ -57,7 +56,6 @@ class GetClientSerializer(serializers.ModelSerializer):
             "sex",
             "birth_date",
             "phone",
-            "address",
             "email",
             "trainer",
         ]

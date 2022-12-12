@@ -23,7 +23,6 @@ class Client(models.Model):
     sex = models.CharField(max_length=255, choices=SexOptions.choices)
     birth_date = models.DateField(null=True, blank=True)
     phone = models.CharField(max_length=255, null=True, blank=True)
-    address = models.CharField(max_length=255, null=True, blank=True)
     email = models.CharField(max_length=255, null=True, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
