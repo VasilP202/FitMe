@@ -1,7 +1,8 @@
-from clients.models import Client
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
+from clients.models import Client
 from users.models import Trainer
 
 User = get_user_model()

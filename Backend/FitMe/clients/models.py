@@ -4,6 +4,7 @@ from typing import Optional
 from dateutil.relativedelta import relativedelta
 from django.db import models
 from django.db.models import Count
+
 from workouts.managers import WorkoutQuerySet
 
 from .enums import SexOptions
@@ -79,7 +80,7 @@ class Client(models.Model):
             updated_at__gte=months_twelve, client_came=True
         ).count()
 
-    def get_annotate_by_workout_type(self) -> WorkoutQuerySet:
+    def get_annotate_by_workout_type(self) -> "WorkoutQuerySet":
         return (
             self.workouts.filter(client_came=True)
             .values("type")
