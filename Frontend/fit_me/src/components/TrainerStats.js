@@ -76,16 +76,17 @@ class TrainerStats extends Component {
                 <p className="text-muted mb-1">{ localStorage.getItem("username")}</p>
               </MDBCardBody>
             </MDBCard>
-
+            </MDBRow> 
+            <MDBRow> 
               <MDBCol md="6">
                 <MDBCard className="mb-4 mb-md-0">
                   <MDBCardBody>
                   <MDBRow>
                     <MDBCol sm="3">
-                      <MDBCardText>Email:</MDBCardText>
+                      <MDBCardText>Name:</MDBCardText>
                     </MDBCol>
                     <MDBCol sm="9">
-                      <MDBCardText className="text-muted">{this.state.trainerInfo.email}</MDBCardText>
+                      <MDBCardText className="text-muted">{this.state.trainerInfo.first_name + " " + this.state.trainerInfo.last_name}</MDBCardText>
                     </MDBCol>
                   </MDBRow>
                   <hr />
@@ -108,6 +109,7 @@ class TrainerStats extends Component {
                 </MDBCard>
               </MDBCol>
             </MDBRow>
+            <hr />
             <MDBRow>
               <MDBCard className="mb-4">
                 <MDBCardBody className="text-center">
@@ -122,7 +124,49 @@ class TrainerStats extends Component {
                         }}
                         />
                 </MDBCardBody>
-              </MDBCard>             
+              </MDBCard>
+              <MDBCard className="mb-4">
+                <MDBCardBody className="text-center">
+                <Bar data={{
+                          labels: ["Clients under 20", "Clients from 20 to 30", "Clients from 30 to 40", "Clients from 40 to 50", "Clients above 50"],
+                          datasets: [{
+                            label: "Count",
+                            data: [this.state.stats.clients_age_under_20, this.state.stats.clients_age_20_to_30, this.state.stats.clients_age_30_to_40, this.state.stats.clients_age_40_to_50, this.state.stats.clients_age_above_50],
+                            backgroundColor: ['#22ABD4', '#22D49B', '#32D422', '#B1D422', '#D49922' ],
+                          }],
+                        }}
+                        />
+                </MDBCardBody>
+              </MDBCard>              
+          </MDBRow>
+          <MDBRow>
+              <MDBCard className="mb-4">
+                <MDBCardBody className="text-center">
+                <MDBCardText className="mb-1">Workouts stats</MDBCardText>
+                <Bar data={{
+                          labels: ["All workouts", "Workouts done", "Workouts canceled", "Workouts in last tree months"],
+                          datasets: [{
+                            label: "Count",
+                            data: [this.state.stats.workouts_scheduled_count, this.state.stats.workouts_done_count, this.state.stats.workouts_scheduled_count - this.state.stats.workouts_done_count, this.state.stats.workouts_three_months_count],
+                            backgroundColor: ['#bababa', '#198722', '#f44336', '#ffd966'],
+                          }],
+                        }}
+                        />
+                </MDBCardBody>
+              </MDBCard>
+              <MDBCard className="mb-4">
+                <MDBCardBody className="text-center">
+                <Bar data={{
+                          labels: [this.state.stats.workouts_by_type_count, "Clients from 20 to 30", "Clients from 30 to 40", "Clients from 40 to 50", "Clients above 50"],
+                          datasets: [{
+                            label: "Count",
+                            data: [this.state.stats.clients_age_under_20, this.state.stats.clients_age_20_to_30, this.state.stats.clients_age_30_to_40, this.state.stats.clients_age_40_to_50, this.state.stats.clients_age_above_50],
+                            backgroundColor: ['#22ABD4', '#22D49B', '#32D422', '#B1D422', '#D49922' ],
+                          }],
+                        }}
+                        />
+                </MDBCardBody>
+              </MDBCard>              
           </MDBRow>
       </MDBContainer>
     </section>

@@ -66,7 +66,6 @@ class Stats extends Component {
     let whoIS;
     const isTrainer = localStorage.getItem("is_trainer");
     if (isTrainer === "false") {
-      forms = <ClientForms />;
       whoIS = "CLIENT";
     }
     else {
@@ -75,7 +74,6 @@ class Stats extends Component {
     return (
       <section style={{ backgroundColor: '#fff',position: 'relative',top: '80px' }}>
       <MDBContainer className="py-5">
-        <div style={{ backgroundColor: '#fff',position: 'relative',top: '-25px' }}>{forms}</div>
         <MDBRow>       
           <MDBCard className="mb-4">
               <MDBCardBody className="text-center">
@@ -89,6 +87,8 @@ class Stats extends Component {
                 <p className="text-muted mb-1">{ localStorage.getItem("username")}</p>
               </MDBCardBody>
             </MDBCard>
+            </MDBRow>
+            <MDBRow>
 
               <MDBCol md="6">
                 <MDBCard className="mb-4 mb-md-0">
@@ -147,6 +147,7 @@ class Stats extends Component {
                 </MDBCard>
               </MDBCol>
             </MDBRow>
+            <hr />
             <MDBRow>
               <MDBCard className="mb-4">
                 <MDBCardBody className="text-center">
@@ -163,6 +164,7 @@ class Stats extends Component {
                 </MDBCardBody>
               </MDBCard>             
           </MDBRow>
+          <hr />
             <MDBRow>
               <MDBCard className="mb-4">
                 <MDBCardBody className="text-center">
