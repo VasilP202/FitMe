@@ -24,7 +24,7 @@ class Stats extends Component {
   state = {
     measurements: [],
     workouts: [],
-    personalInfo: [],
+    personalInfo: {},
   };
 
   componentDidMount() {
@@ -62,7 +62,7 @@ class Stats extends Component {
 
     }
     render() {
-    let forms;
+    const trainer = this.state.personalInfo.trainer;
     let whoIS;
     const isTrainer = localStorage.getItem("is_trainer");
     if (isTrainer === "false") {

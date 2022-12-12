@@ -53,6 +53,12 @@ class TrainerStats extends Component {
   render() {
     let whoIS;
     const isTrainer = localStorage.getItem("is_trainer");
+    const arr = this.state.stats.workouts_by_type_count;
+    if (arr) {
+      arr.forEach(wType => {
+        console.log(wType.type, wType.count)
+      });
+    }
     if (isTrainer === "false") {
       whoIS = "CLIENT";
     }
@@ -60,6 +66,7 @@ class TrainerStats extends Component {
       whoIS = "TRAINER";
     }
     console.log(this.state);
+         
     return (
       <section style={{ backgroundColor: '#fff',position: 'relative',top: '80px' }}>
       <MDBContainer className="py-5">
@@ -157,10 +164,10 @@ class TrainerStats extends Component {
               <MDBCard className="mb-4">
                 <MDBCardBody className="text-center">
                 <Bar data={{
-                          labels: [this.state.stats.workouts_by_type_count, "Clients from 20 to 30", "Clients from 30 to 40", "Clients from 40 to 50", "Clients above 50"],
+                          labels: arr,
                           datasets: [{
                             label: "Count",
-                            data: [this.state.stats.clients_age_under_20, this.state.stats.clients_age_20_to_30, this.state.stats.clients_age_30_to_40, this.state.stats.clients_age_40_to_50, this.state.stats.clients_age_above_50],
+                            data: arr,
                             backgroundColor: ['#22ABD4', '#22D49B', '#32D422', '#B1D422', '#D49922' ],
                           }],
                         }}
