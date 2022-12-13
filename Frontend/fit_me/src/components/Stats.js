@@ -1,3 +1,4 @@
+/* Author: Tomas Fiser, xfiser16 */
 import React, { Component } from "react";
 import {
   MDBCol,
@@ -21,14 +22,14 @@ import { Chart as chartjs } from "chart.js/auto";
 
 
 class Stats extends Component {
-  state = {
+  state = { /* Structure containing data from database requests */
     measurements: [],
     workouts: [],
     personalInfo: {},
   };
 
   componentDidMount() {
-    const tokenString = localStorage.getItem("token");
+    const tokenString = localStorage.getItem("token");  /* Storage of access rights */
     const accessToken = JSON.parse(tokenString)?.access;
     
     let params = {};
@@ -37,7 +38,7 @@ class Stats extends Component {
     }
 
     axios
-      .get(API_URL + "clients/measurement-list/", {
+      .get(API_URL + "clients/measurement-list/", {  /* DB request for user measurements */
         params: params,
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -48,7 +49,7 @@ class Stats extends Component {
       });
 
       axios
-      .get(API_URL + "clients/workout-stats/", {
+      .get(API_URL + "clients/workout-stats/", { /* DB request for user statistics */
         params: params,
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -59,7 +60,7 @@ class Stats extends Component {
       });
 
       axios
-      .get(API_URL + "clients/personal-info/", {
+      .get(API_URL + "clients/personal-info/", { /* DB request for user personal infomations, like name */
         params: params,
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -70,23 +71,23 @@ class Stats extends Component {
       });
 
     }
-    render() {
+    render() { /* A function that renders something to the screen */
     const trainer = this.state.personalInfo.trainer;
     const arr = this.state.workouts.workouts_by_type_count;
-    if (arr) {
+    if (arr) {      /* Checking if the array exists */
       arr.forEach(wType => {
         console.log(wType.type, wType.count)
       });
     }
-    let whoIS;
-    const isTrainer = localStorage.getItem("is_trainer");
+    let whoIS;      /* Saving the type of logged in user */
+    const isTrainer = localStorage.getItem("is_trainer"); /*Saving a multidimensional array for further processing*/
     if (isTrainer === "false") {
       whoIS = "CLIENT";
     }
     else {
       whoIS = "TRAINER";
     }
-    return (
+    return (       
       <section style={{ backgroundColor: '#fff',position: 'relative',top: '80px' }}>
       <MDBContainer className="py-5">
         <MDBRow>       
@@ -104,8 +105,8 @@ class Stats extends Component {
             </MDBCard>
             </MDBRow>
             <MDBRow>
-
-              <MDBCol md="6">
+                                             
+              <MDBCol md="6">    {/* Beginning of the section displaying personal data */}
                 <MDBCard className="mb-4 mb-md-0">
                   <MDBCardBody>
                   <MDBRow>
@@ -146,8 +147,8 @@ class Stats extends Component {
                   <hr />
                   </MDBCardBody>
                 </MDBCard>
-              </MDBCol>
-              <MDBCol md="6">
+              </MDBCol> {/* End of the section displaying personal data */}
+              <MDBCol md="6"> {/* Beginning of the section displaying data about peronal trainer */}
                 <MDBCard className="mb-4 mb-md-0">
                     <MDBCardBody className="text-center">
                     <MDBCardText className="mb-1">My trainer</MDBCardText>
@@ -161,14 +162,14 @@ class Stats extends Component {
                       <p className="text-muted mb-1">{trainer?.email}</p>
                     </MDBCardBody>
                 </MDBCard>
-              </MDBCol>
+              </MDBCol>{/* End of the section displaying data about peronal trainer */}
             </MDBRow>
             <hr />
             <MDBRow>
-              <MDBCard className="mb-4">
+              <MDBCard className="mb-4"> 
                 <MDBCardBody className="text-center">
                 <MDBCardText className="mb-1">Weight progress</MDBCardText>
-                <Line data={{
+                <Line data={{ /* Graph showing the development of weight measurement */
                           labels: this.state.measurements.map((measurement) => (measurement.date)),
                           datasets: [{
                             label: "Weight (kg)",
@@ -185,7 +186,7 @@ class Stats extends Component {
               <MDBCard className="mb-4">
                 <MDBCardBody className="text-center">
                 <MDBCardText className="mb-1">Workout stats</MDBCardText>
-                <Bar data={{
+                <Bar data={{ /* Graph showing the stats of workouts */
                           labels: ["All workouts", "Workouts done", "Workouts missed", "Workouts this month"],
                           datasets: [{
                             label: "Count",
@@ -199,7 +200,7 @@ class Stats extends Component {
               <MDBCard className="mb-4">
                 <MDBCardBody className="text-center">
                 <MDBCardText className="mb-1">Workout counts by type of workout</MDBCardText>
-                <Bar data={{
+                <Bar data={{ /* Graph showing the stats about type of workouts */
                           labels: arr?.map((types) => (types.type)),
                           datasets: [{
                             label: "Count",

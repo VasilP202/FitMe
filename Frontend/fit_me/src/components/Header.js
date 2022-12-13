@@ -1,3 +1,5 @@
+/* Authors: Vasil Poposki,  xpopos00
+           Tomas Fiser, xfiser16*/
 import React, { Component } from "react";
 import {
   Navbar,
@@ -19,7 +21,7 @@ class Header extends Component {
     super(props);
 
     this.toggle = this.toggle.bind(this);
-    this.state = {
+    this.state = { /* Structure containing data from database requests */
       dropdownOpen: false,
     };
   }
@@ -30,7 +32,7 @@ class Header extends Component {
     });
   }
 
-  logout() {
+  logout() {              /* Removal of access rights (logout) */
     localStorage.removeItem("token");
   }
 
@@ -44,7 +46,7 @@ class Header extends Component {
         bg="dark"
         variant="dark"
       >
-        <NavbarBrand tag={Link} to="/">
+        <NavbarBrand tag={Link} to="/">  {/* Website logo with navigation on click */}
           <img
             alt="logo"
             src="./fitme-logo.png"
@@ -55,7 +57,7 @@ class Header extends Component {
           />
         </NavbarBrand>
         <Nav navbar>
-        <NavItem>
+        <NavItem>        {/* Start of navigation with navigation routes */}
               <NavLink tag={Link} to="/clients" >Clients</NavLink>
           </NavItem>
           <NavItem>

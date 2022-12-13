@@ -1,3 +1,4 @@
+/* Author: Tomas Fiser, xfiser16 */
 import React, { Component } from "react";
 import {
   MDBCol,
@@ -20,17 +21,17 @@ import { Line, Bar } from 'react-chartjs-2';
 import { Chart as chartjs } from "chart.js/auto";
 
 class TrainerStats extends Component {
-  state = {
+  state = { /* Structure containing data from database requests */
     trainerInfo: [],
     stats: [],
   };
 
   componentDidMount() {
-    const tokenString = localStorage.getItem("token");
+    const tokenString = localStorage.getItem("token"); /* Storage of access rights */
     const accessToken = JSON.parse(tokenString)?.access;
 
     axios
-      .get(AUTH_URL + "trainer-personal-info/", {
+      .get(AUTH_URL + "trainer-personal-info/", { /* DB request for trainer personal info */
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -40,7 +41,7 @@ class TrainerStats extends Component {
       });
 
     axios
-      .get(API_URL + "workouts/trainer-stats/", {
+      .get(API_URL + "workouts/trainer-stats/", { /* DB request for trainer stats */
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -50,11 +51,11 @@ class TrainerStats extends Component {
       });
   }
 
-  render() {
-    let whoIS;
-    const isTrainer = localStorage.getItem("is_trainer");
-    const arr = this.state.stats.workouts_by_type_count;
-    if (arr) {
+  render() { /* A function that renders something to the screen */
+    let whoIS; /* Saving the type of logged in user */
+    const isTrainer = localStorage.getItem("is_trainer"); /*Saving a multidimensional array for further processing*/
+    const arr = this.state.stats.workouts_by_type_count;  /*Saving a multidimensional array for further processing*/
+    if (arr) {     /* Checking if the array exists */
       arr.forEach(wType => {
         console.log(wType.type, wType.count)
       });
@@ -85,7 +86,7 @@ class TrainerStats extends Component {
             </MDBCard>
             </MDBRow> 
             <MDBRow> 
-              <MDBCol md="6">
+              <MDBCol md="6">                        {/* Beginning of the section displaying personal data */}
                 <MDBCard className="mb-4 mb-md-0">
                   <MDBCardBody>
                   <MDBRow>
@@ -114,11 +115,11 @@ class TrainerStats extends Component {
                   <hr />
                   </MDBCardBody>
                 </MDBCard>
-              </MDBCol>
+              </MDBCol>                            {/* End of the section displaying personal data */}
             </MDBRow>
             <hr />
             <MDBRow>
-              <MDBCard className="mb-4">
+              <MDBCard className="mb-4">           {/* Graph showing the trainer stats */}
                 <MDBCardBody className="text-center">
                 <MDBCardText className="mb-1">Trainer stats</MDBCardText>
                 <Bar data={{
@@ -132,7 +133,7 @@ class TrainerStats extends Component {
                         />
                 </MDBCardBody>
               </MDBCard>
-              <MDBCard className="mb-4">
+              <MDBCard className="mb-4">          {/* Graph showing the trainer stats */}
                 <MDBCardBody className="text-center">
                 <Bar data={{
                           labels: ["Clients under 20", "Clients from 20 to 30", "Clients from 30 to 40", "Clients from 40 to 50", "Clients above 50"],
@@ -148,7 +149,7 @@ class TrainerStats extends Component {
           </MDBRow>
           <hr />
           <MDBRow>
-              <MDBCard className="mb-4">
+              <MDBCard className="mb-4">         {/* Graph showing the stats of workouts */}
                 <MDBCardBody className="text-center">
                 <MDBCardText className="mb-1">Workout stats</MDBCardText>
                 <Bar data={{
@@ -162,7 +163,7 @@ class TrainerStats extends Component {
                         />
                 </MDBCardBody>
               </MDBCard>
-              <MDBCard className="mb-4">
+              <MDBCard className="mb-4">         {/* Graph showing the stats about type of workouts */}
                 <MDBCardBody className="text-center">
                 <MDBCardText className="mb-1">Workout counts by type of workout</MDBCardText>
                 <Bar data={{

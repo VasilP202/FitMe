@@ -1,11 +1,12 @@
+/* Author: Tomas Fiser, xfiser16 */
 import axios from "axios";
 import { Component } from "react";
 import { Form, FormGroup, Button, Input, Label, Upload } from "reactstrap";
 import { API_URL } from "../constants";
 
 class NewPicture extends Component {
-
-  componentDidMount() {
+  /* This component is not supported yet, maybe soon */
+  componentDidMount() { 
     const tokenString = localStorage.getItem("token");
     const accessToken = JSON.parse(tokenString)?.access;
     axios
@@ -24,13 +25,13 @@ class NewPicture extends Component {
 
   render() {
     return (
-      <Form onSubmit={this.addNewPicture}>
+      <Form onSubmit={this.addNewPicture}> {/* Form for file upload */}
         <FormGroup>
           <Label>Choose picture:</Label>
           <Input
             name="file"
             type="file"
-            accept=".jpg, .jpeg, .png"
+            accept=".jpg, .jpeg, .png"     /* Supported data types */
             onChange={this.changeState}
           />
         </FormGroup>

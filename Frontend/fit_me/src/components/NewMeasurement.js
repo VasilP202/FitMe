@@ -1,18 +1,19 @@
+/* Author: Tomas Fiser, xfiser16 */
 import axios from "axios";
 import { Component } from "react";
 import { Form, FormGroup, Button, Input, Label } from "reactstrap";
 import { API_URL } from "../constants";
 
 class NewMeasurement extends Component {
-  state = {
+  state = { /* Structure containing data for database requests */
     date: "",
     weight: 0,
   };
-  handleDate = (e) => {
+  handleDate = (e) => {                   /* Handling date input */
     this.setState({ date: e.target.value });
   };
 
-  handleWeight = (e) => {
+  handleWeight = (e) => {                 /* Handling weight input */
     this.setState({ weight: e.target.value });
   };
 
@@ -21,11 +22,11 @@ class NewMeasurement extends Component {
 
     console.log(this.state);
 
-    const tokenString = localStorage.getItem("token");
+    const tokenString = localStorage.getItem("token");   /* Storage of access rights */
     const accessToken = JSON.parse(tokenString)?.access;
     axios
       .post(
-        API_URL + "clients/measurement-list/",
+        API_URL + "clients/measurement-list/", /* Request sending new measurement data */
         {
           date: this.state.date,
           weight: this.state.weight,
@@ -37,10 +38,10 @@ class NewMeasurement extends Component {
       .then((response) => console.log(response.data));
     this.props.toggle();
   };
-  render() {
+  render() {     /* A function that renders something to the screen */
     return (
       <Form onSubmit={this.addNewMeasurement}>
-        <FormGroup>
+        <FormGroup>              {/* Beginning of the form for new measurements */}
           <Label>Date and time:</Label>
           <Input
             required
