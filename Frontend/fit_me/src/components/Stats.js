@@ -30,8 +30,15 @@ class Stats extends Component {
   componentDidMount() {
     const tokenString = localStorage.getItem("token");
     const accessToken = JSON.parse(tokenString)?.access;
+    
+    let params = {};
+    if (this.props.clientId) {
+      params["id"] = this.props.clientId;
+    }
+
     axios
       .get(API_URL + "clients/measurement-list/", {
+        params: params,
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -42,6 +49,7 @@ class Stats extends Component {
 
       axios
       .get(API_URL + "clients/workout-stats/", {
+        params: params,
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -52,6 +60,7 @@ class Stats extends Component {
 
       axios
       .get(API_URL + "clients/personal-info/", {
+        params: params,
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },

@@ -123,6 +123,7 @@ def client_personal_info(request):
         if request.user.is_client:
             serializer = GetClientSerializer(request.user.client)
         else:  # trainer
+            print("HEREEEE", )
             client_id = int(request.query_params.get("id"))
             try:
                 client = Client.objects.get(id=client_id)
