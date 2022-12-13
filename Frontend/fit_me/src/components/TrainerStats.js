@@ -155,7 +155,7 @@ class TrainerStats extends Component {
                           labels: ["All workouts", "Workouts done", "Workouts canceled", "Workouts in last tree months"],
                           datasets: [{
                             label: "Count",
-                            data: [this.state.stats.workouts_scheduled_count, this.state.stats.workouts_done_count, this.state.stats.workouts_scheduled_count - this.state.stats.workouts_done_count, this.state.stats.workouts_three_months_count],
+                            data: [this.state.stats.workouts_scheduled_count, this.state.stats.workouts_scheduled_count - this.state.stats.workouts_client_absent_count, this.state.stats.workouts_client_absent_count, this.state.stats.workouts_three_months_count],
                             backgroundColor: ['#bababa', '#198722', '#f44336', '#ffd966'],
                           }],
                         }}
