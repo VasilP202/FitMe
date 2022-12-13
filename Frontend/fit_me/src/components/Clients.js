@@ -3,7 +3,7 @@ import { Col, Row, Modal, ModalHeader, ModalBody } from "reactstrap";
 import axios from "axios";
 import { API_URL } from "../constants";
 import { Container } from "reactstrap";
-import Stats from "./Stats";
+import StatsModal from "./StatsModal";
 
 class Clients extends Component {
   state = {
@@ -70,7 +70,7 @@ class Clients extends Component {
                   Schedule new training session with your client
                 </ModalHeader>
                 <ModalBody>
-                  <Stats toggle={this.toggle} clientId={client.pk} />
+                  <StatsModal toggle={this.toggle} clientId={client.pk} />
                 </ModalBody>
               </Modal>
               {/* TODO Stats - Statistika klienta Stats.js */}
