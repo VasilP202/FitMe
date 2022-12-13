@@ -26,7 +26,7 @@ class ClientForms extends Component {
 
   render() {
     return (
-      <Row id="forms-row" /* className="justify-content-md-center" */>
+      <Row id="forms-row">
         <Col xs="4" sm="4">
           <div className="form-add-inline">
             <MdOutlineAddCircle
@@ -52,12 +52,12 @@ class ClientForms extends Component {
             />
             <p>New progress photos</p>
           </div>
-        <Modal isOpen={this.state.modal2} toggle2={this.toggle2}>
-            <ModalHeader toggle2={this.toggle2}>
+        <Modal isOpen={this.state.modal2} toggle={this.toggle2}>
+            <ModalHeader toggle={this.toggle2}>
               Add new picture
             </ModalHeader>
             <ModalBody>
-              <NewPicture toggle2={this.toggle2} />
+              <NewPicture toggle={this.toggle2} />
             </ModalBody>
           </Modal>
           </Col>
