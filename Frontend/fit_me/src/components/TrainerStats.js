@@ -146,10 +146,11 @@ class TrainerStats extends Component {
                 </MDBCardBody>
               </MDBCard>              
           </MDBRow>
+          <hr />
           <MDBRow>
               <MDBCard className="mb-4">
                 <MDBCardBody className="text-center">
-                <MDBCardText className="mb-1">Workouts stats</MDBCardText>
+                <MDBCardText className="mb-1">Workout stats</MDBCardText>
                 <Bar data={{
                           labels: ["All workouts", "Workouts done", "Workouts canceled", "Workouts in last tree months"],
                           datasets: [{
@@ -163,12 +164,13 @@ class TrainerStats extends Component {
               </MDBCard>
               <MDBCard className="mb-4">
                 <MDBCardBody className="text-center">
+                <MDBCardText className="mb-1">Workout counts by type of workout</MDBCardText>
                 <Bar data={{
-                          labels: arr,
+                          labels: arr?.map((types) => (types.type)),
                           datasets: [{
                             label: "Count",
-                            data: arr,
-                            backgroundColor: ['#22ABD4', '#22D49B', '#32D422', '#B1D422', '#D49922' ],
+                            data: arr?.map((counts) => (counts.count)),
+                            backgroundColor: [ '#8022D4' ,'#22ABD4', '#22D49B', '#32D422', '#B1D422', '#D49922', '#D43D22',  ],
                           }],
                         }}
                         />
