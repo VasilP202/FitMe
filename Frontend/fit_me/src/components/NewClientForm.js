@@ -15,6 +15,13 @@ class NewClientForm extends Component {
     phone: null,
   };
 
+  componentDidMount() {
+    if (this.props.client) {
+      const { pk, first_name, last_name, email, phone } = this.props.client;
+      this.setState({ pk, first_name, last_name, email, phone });
+    }
+  }
+
   changeState = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -30,9 +37,23 @@ class NewClientForm extends Component {
       })
       .then(this.props.toggle());
   };
+
+  editClient = (e) => {
+    e.preventDefault();
+
+    const tokenString = localStorage.getItem("token");
+    const accessToken = JSON.parse(tokenString)?.access;
+    axios
+      .put(API_URL + "clients/" + this.props.client.pk + "/", this.state, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+      .then(this.props.toggle());
+  };
+
+
   render() {
     return (
-      <Form onSubmit={this.addNewClient}>
+      <Form onSubmit={this.props.client ? this.editClient : this.addNewClient}>
         <FormGroup>
           <Label>First name:</Label>
           <Input
