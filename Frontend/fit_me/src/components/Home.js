@@ -1,3 +1,5 @@
+/* Author: Vasil Poposki,  xpopos00*/
+
 import React, { Component } from "react";
 import { Col, Container, Row } from "reactstrap";
 import axios from "axios";
@@ -9,12 +11,14 @@ import TrainerForms from "./TrainerForms";
 import ClientForms from "./ClientForms";
 
 class Home extends Component {
+  /* Application's home component. Renders workout summary list and handles workout changes requests. */
   state = {
     workouts: [],
     datetime: new Date(),
   };
 
   componentDidMount() {
+    /* Get workouts for a specific date. */
     const tokenString = localStorage.getItem("token");
     const accessToken = JSON.parse(tokenString)?.access;
     axios
@@ -30,6 +34,7 @@ class Home extends Component {
   }
 
   toggleWorkoutDone(workout) {
+    /* Change boolean value of workout's workoutDone field. */
     const tokenString = localStorage.getItem("token");
     const accessToken = JSON.parse(tokenString)?.access;
     axios
@@ -56,6 +61,7 @@ class Home extends Component {
   }
 
   toggleClientCame(workout) {
+    /* Change boolean value of workout's clientCame field. */
     const client_came =
       workout.client_came === null ? false : !workout.client_came;
 
@@ -99,6 +105,7 @@ class Home extends Component {
       })
       .then((response) => this.setState({ workouts: response.data }));
   }
+
   render() {
     let forms;
     const isTrainer = localStorage.getItem("is_trainer");

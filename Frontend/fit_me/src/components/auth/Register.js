@@ -1,3 +1,5 @@
+/* Author: Vasil Poposki,  xpopos00*/
+
 import React, { useState } from "react";
 import {
   Button,
@@ -15,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { AUTH_URL } from "../../constants/index";
 
 async function register(data) {
+  /* If successful, new user is created in the database. */
   return axios
     .post(AUTH_URL + "register/", data)
     .then((response) => {
@@ -26,6 +29,8 @@ async function register(data) {
 }
 
 export default function Register() {
+  /* Register component. Based on a registration form and submit handling. */
+
   const nav = useNavigate();
 
   const [email, setEmail] = useState();

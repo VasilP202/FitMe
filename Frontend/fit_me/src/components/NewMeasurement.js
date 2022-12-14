@@ -5,48 +5,51 @@ import { Form, FormGroup, Button, Input, Label } from "reactstrap";
 import { API_URL } from "../constants";
 
 class NewMeasurement extends Component {
-  state = { /* Structure containing data for database requests */
-    date: "",
+  state = {
+    /* Structure containing data for database requests */ date: "",
     weight: 0,
   };
-  handleDate = (e) => {                   /* Handling date input */
+  handleDate = (e) => {
+    /* Handling date input */
     this.setState({ date: e.target.value });
   };
 
-  handleWeight = (e) => {                 /* Handling weight input */
+  handleWeight = (e) => {
+    /* Handling weight input */
     this.setState({ weight: e.target.value });
   };
 
   addNewMeasurement = (e) => {
     e.preventDefault();
 
-    console.log(this.state);
-
-    const tokenString = localStorage.getItem("token");   /* Storage of access rights */
+    const tokenString =
+      localStorage.getItem("token"); /* Storage of access rights */
     const accessToken = JSON.parse(tokenString)?.access;
-    axios
-      .post(
-        API_URL + "clients/measurement-list/", /* Request sending new measurement data */
-        {
-          date: this.state.date,
-          weight: this.state.weight,
-        },
-        {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        }
-      )
-      .then((response) => console.log(response.data));
+    axios.post(
+      API_URL +
+        "clients/measurement-list/" /* Request sending new measurement data */,
+      {
+        date: this.state.date,
+        weight: this.state.weight,
+      },
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      }
+    );
     this.props.toggle();
   };
-  render() {     /* A function that renders something to the screen */
+  render() {
+    /* A function that renders something to the screen */
     return (
       <Form onSubmit={this.addNewMeasurement}>
-        <FormGroup>              {/* Beginning of the form for new measurements */}
+        <FormGroup>
+          {" "}
+          {/* Beginning of the form for new measurements */}
           <Label>Date and time:</Label>
           <Input
             required
             name="date"
-            type="datetime-local"
+            type="date"
             onChange={this.handleDate}
           />
         </FormGroup>

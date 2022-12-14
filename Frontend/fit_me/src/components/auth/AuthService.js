@@ -1,3 +1,5 @@
+/* Author: Vasil Poposki,  xpopos00*/
+
 import React from "react";
 import PropTypes from "prop-types";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
@@ -7,6 +9,7 @@ import Login from "./Login";
 import "./AuthService.css";
 
 export default function AuthService({ setToken }) {
+  /* Authentication component. Provides registration and login options. */
   return (
     <div>
       <Row className="" id="brand-row">

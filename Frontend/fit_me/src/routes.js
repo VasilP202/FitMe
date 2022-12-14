@@ -13,7 +13,7 @@ function PageRouter() {
   return (
     <Router>
       <Routes>
-        <Route path="/" component={<App/>} />
+        <Route path="/" component={<App />} />
         {/* <Route path="/login" component={LoginPage} /> */}
         <Navigate to="/" />
       </Routes>

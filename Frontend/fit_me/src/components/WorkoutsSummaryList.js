@@ -1,11 +1,7 @@
+/* Author: Vasil Poposki,  xpopos00*/
+
 import React, { Component } from "react";
-import {
-  Table,
-  Container,
-  Modal,
-  ModalBody,
-  ModalHeader,
-} from "reactstrap";
+import { Table, Container, Modal, ModalBody, ModalHeader } from "reactstrap";
 import { FaTimes, FaUndo } from "react-icons/fa";
 import { BsThreeDots } from "react-icons/bs";
 import { BiDetail } from "react-icons/bi";
@@ -41,15 +37,16 @@ function getDateTitle(datetime) {
 }
 
 class WorkoutsSummaryList extends Component {
+  /* Workout list component. Renders the table of workouts provided in props. */
   toggleExercises = this.toggleExercises.bind(this);
   state = {
     exercisesModal: false,
     exercisesModalWorkoutId: 0,
-    popoverOpen: false
+    popoverOpen: false,
   };
   togglePopover() {
     this.setState({
-      popoverOpen: !this.state.popoverOpen
+      popoverOpen: !this.state.popoverOpen,
     });
   }
   toggleExercises(workoutId) {
@@ -75,7 +72,9 @@ class WorkoutsSummaryList extends Component {
               <th>Time</th>
               <th>Duration</th>
               <th>Detail</th>
-              <th>{this.props.isTrainer=="true"? 'Client absent': 'Absent'}</th>
+              <th>
+                {this.props.isTrainer == "true" ? "Client absent" : "Absent"}
+              </th>
               <th></th>
             </tr>
           </thead>
@@ -122,15 +121,20 @@ class WorkoutsSummaryList extends Component {
                       />
                     )}
                   </td>
-                  {this.props.isTrainer=="true" &&
-                  <td>
-                    <BsThreeDots
-                      id={"Popover-" + workout.pk}
-                      style={{ fontSize: "30px" }}
-                      onClick={this.togglePopover}
-                    />
-                  <WorkoutPopover key={workout.pk} id={workout.pk} workout={workout} />
-                  </td>}
+                  {this.props.isTrainer == "true" && (
+                    <td>
+                      <BsThreeDots
+                        id={"Popover-" + workout.pk}
+                        style={{ fontSize: "30px" }}
+                        onClick={this.togglePopover}
+                      />
+                      <WorkoutPopover
+                        key={workout.pk}
+                        id={workout.pk}
+                        workout={workout}
+                      />
+                    </td>
+                  )}
                   <Modal
                     style={{ maxWidth: "700px", width: "100%" }}
                     isOpen={this.isOpenExercisesModal(workout.pk)}
@@ -153,7 +157,5 @@ class WorkoutsSummaryList extends Component {
     );
   }
 }
-
-
 
 export default WorkoutsSummaryList;

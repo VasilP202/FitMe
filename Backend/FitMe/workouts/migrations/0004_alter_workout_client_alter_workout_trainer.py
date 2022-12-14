@@ -8,7 +8,6 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ("users", "0003_trainer"),
-        ("clients", "0005_testclientphoto"),
         ("workouts", "0003_alter_workout_client_came"),
     ]
 

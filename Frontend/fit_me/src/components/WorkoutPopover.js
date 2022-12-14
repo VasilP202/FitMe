@@ -1,30 +1,19 @@
+/* Author: Vasil Poposki,  xpopos00*/
+
 import { Component } from "react";
-import {
-  Button,
-  Popover,
-  PopoverHeader,
-  PopoverBody,
-  Modal,
-  ModalBody,
-  ModalHeader,
-} from "reactstrap";
+import { Button, Popover, PopoverBody } from "reactstrap";
 import axios from "axios";
 import { API_URL } from "../constants";
-import NewWorkoutForm from "./NewWorkoutForm";
 
 class WorkoutPopover extends Component {
-  constructor(props) {
-    super(props);
-
-    this.toggle = this.toggle.bind(this);
-    this.toggleWorkoutForm = this.toggleWorkoutForm.bind(this);
-
-    this.state = {
-      popoverOpen: false,
-      modalWorkoutForm: false,
-      workout: {},
-    };
-  }
+  /* Single workout popover component. Provides delete workout option. */
+  toggle = this.toggle.bind(this);
+  toggleWorkoutForm = this.toggleWorkoutForm.bind(this);
+  state = {
+    popoverOpen: false,
+    modalWorkoutForm: false,
+    workout: {},
+  };
 
   toggle() {
     this.setState({

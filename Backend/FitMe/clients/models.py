@@ -75,35 +75,6 @@ class Client(models.Model):
         return self.workouts.filter().values("type").annotate(count=Count("type"))
 
 
-class ClientPhotoSet(models.Model):
-    client = models.ForeignKey(
-        Client, related_name="photo_sets", on_delete=models.CASCADE
-    )
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-
-def upload_to(instance, filename):
-    return "photos/{client_id}/{filename}".format(
-        client_id=instance.client_id, filename=filename
-    )
-
-
-class ClientPhoto(models.Model):
-    photo_set = models.ForeignKey(
-        ClientPhotoSet, related_name="photos", on_delete=models.CASCADE
-    )
-    image_path = models.ImageField(upload_to=upload_to, blank=True, null=True)
-
-
-class TestClientPhoto(models.Model):
-    client = models.ForeignKey(Client, on_delete=models.CASCADE)
-    image_path = models.ImageField(upload_to=upload_to, blank=True, null=True)
-
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-
 class ClientMeasurement(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     date = models.DateTimeField()

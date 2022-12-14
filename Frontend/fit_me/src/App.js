@@ -1,3 +1,5 @@
+/* Authors: Tomas Fiser, xfiser16
+           Vasil Poposki,  xpopos00*/
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./App.css";
@@ -14,11 +16,12 @@ function App() {
   const { token, setToken } = useToken();
 
   if (!token) {
+    /*Redirect user to the authentication */
     return <AuthService setToken={setToken} />;
   }
 
   const getUserIsTrainer = () => {
-    console.log("localstorage:", localStorage.getItem("is_trainer"));
+    /* User role is stored in localStorage */
     return localStorage.getItem("is_trainer");
   };
 
@@ -30,7 +33,9 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route
             path="/stats"
-            element={getUserIsTrainer() == "true" ? <TrainerStats /> : <Stats />}
+            element={
+              getUserIsTrainer() == "true" ? <TrainerStats /> : <Stats />
+            }
           />
           <Route path="/clients" element={<Clients />} />
         </Routes>

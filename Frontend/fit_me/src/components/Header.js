@@ -21,7 +21,8 @@ class Header extends Component {
     super(props);
 
     this.toggle = this.toggle.bind(this);
-    this.state = { /* Structure containing data from database requests */
+    this.state = {
+      /* Structure containing data from database requests */
       dropdownOpen: false,
     };
   }
@@ -32,7 +33,8 @@ class Header extends Component {
     });
   }
 
-  logout() {              /* Removal of access rights (logout) */
+  logout() {
+    /* Removal of access rights (logout) */
     localStorage.removeItem("token");
   }
 
@@ -46,7 +48,9 @@ class Header extends Component {
         bg="dark"
         variant="dark"
       >
-        <NavbarBrand tag={Link} to="/">  {/* Website logo with navigation on click */}
+        <NavbarBrand tag={Link} to="/">
+          {" "}
+          {/* Website logo with navigation on click */}
           <img
             alt="logo"
             src="./fitme-logo.png"
@@ -57,11 +61,17 @@ class Header extends Component {
           />
         </NavbarBrand>
         <Nav navbar>
-        <NavItem>        {/* Start of navigation with navigation routes */}
-              <NavLink tag={Link} to="/clients" >Clients</NavLink>
+          <NavItem>
+            {" "}
+            {/* Start of navigation with navigation routes */}
+            <NavLink tag={Link} to="/clients">
+              CLIENTS
+            </NavLink>
           </NavItem>
           <NavItem>
-              <NavLink tag={Link} to="/stats">Stats</NavLink>
+            <NavLink tag={Link} to="/stats">
+              STATS
+            </NavLink>
           </NavItem>
         </Nav>
         <Nav className="ms-auto">

@@ -1,3 +1,5 @@
+/* Author: Vasil Poposki,  xpopos00*/
+
 import React, { Component } from "react";
 import { Col, Row, Modal, ModalHeader, ModalBody } from "reactstrap";
 import { MdOutlineAddCircle } from "react-icons/md";
@@ -5,6 +7,7 @@ import NewWorkoutForm from "./NewWorkoutForm";
 import NewClientForm from "./NewClientForm";
 
 class TrainerForms extends Component {
+  /* Trainer forms section component. Provides two trainer form modals. */
   state = {
     modalWorkoutForm: false,
     modalClientForm: false,
@@ -36,7 +39,10 @@ class TrainerForms extends Component {
             />
             <p>New workout</p>
           </div>
-          <Modal isOpen={this.state.modalWorkoutForm} toggle={this.toggleWorkoutForm}>
+          <Modal
+            isOpen={this.state.modalWorkoutForm}
+            toggle={this.toggleWorkoutForm}
+          >
             <ModalHeader toggle={this.toggleWorkoutForm}>
               Schedule new training session with your client
             </ModalHeader>
@@ -53,8 +59,13 @@ class TrainerForms extends Component {
             />
             <p>New client</p>
           </div>
-          <Modal isOpen={this.state.modalClientForm} toggle={this.toggleClientForm}>
-            <ModalHeader toggle={this.toggleClientForm}>Add new client</ModalHeader>
+          <Modal
+            isOpen={this.state.modalClientForm}
+            toggle={this.toggleClientForm}
+          >
+            <ModalHeader toggle={this.toggleClientForm}>
+              Add new client
+            </ModalHeader>
             <ModalBody>
               <NewClientForm toggle={this.toggleClientForm} />
             </ModalBody>

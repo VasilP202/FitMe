@@ -5,9 +5,6 @@ from users.serializers import TrainerSerializer
 from .models import (
     Client,
     ClientMeasurement,
-    ClientPhoto,
-    ClientPhotoSet,
-    TestClientPhoto,
 )
 
 User = get_user_model()
@@ -59,14 +56,6 @@ class GetClientSerializer(serializers.ModelSerializer):
             "email",
             "trainer",
         ]
-
-
-class ClientPhotoSerializer(serializers.ModelSerializer):
-    image_path = serializers.ImageField(required=False)
-
-    class Meta:
-        model = TestClientPhoto
-        fields = ["client", "image_path"]
 
 
 class ClientMeasurementSerializer(serializers.ModelSerializer):

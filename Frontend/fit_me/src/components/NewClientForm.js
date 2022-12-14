@@ -1,11 +1,14 @@
+/* Author: Vasil Poposki, xpopos00*/
+
 import axios from "axios";
 import { Component } from "react";
-import { Form, FormGroup, Button, Input, Label} from "reactstrap";
+import { Form, FormGroup, Button, Input, Label } from "reactstrap";
 import { API_URL } from "../constants";
 
 const sexChoices = ["MALE", "FEMALE"];
 
 class NewClientForm extends Component {
+  /* Client form component. */
   state = {
     first_name: "",
     last_name: "",
@@ -17,8 +20,9 @@ class NewClientForm extends Component {
 
   componentDidMount() {
     if (this.props.client) {
-      const { pk, first_name, last_name, email, phone } = this.props.client;
-      this.setState({ pk, first_name, last_name, email, phone });
+      // Used for updating the client
+      const { first_name, last_name, phone, sex, email, birth_date } = this.props.client;
+      this.setState({ first_name, last_name, email, phone, sex, birth_date });
     }
   }
 
@@ -48,8 +52,8 @@ class NewClientForm extends Component {
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then(this.props.toggle());
+    window.location.reload(false);
   };
-
 
   render() {
     return (
@@ -61,6 +65,7 @@ class NewClientForm extends Component {
             type="text"
             required
             onChange={this.changeState}
+            value={this.state.first_name}
           ></Input>
         </FormGroup>
 
@@ -71,17 +76,29 @@ class NewClientForm extends Component {
             type="text"
             required
             onChange={this.changeState}
+            value={this.state.last_name}
           ></Input>
         </FormGroup>
 
         <FormGroup>
           <Label>Birth date:</Label>
-          <Input name="birth_date" type="date" onChange={this.changeState} />
+          <Input
+            name="birth_date"
+            type="date"
+            onChange={this.changeState}
+            value={this.state.birth_date}
+          />
         </FormGroup>
 
         <FormGroup>
           <Label>Sex:</Label>
-          <Input name="sex" type="select" required onChange={this.changeState}>
+          <Input
+            name="sex"
+            type="select"
+            required
+            onChange={this.changeState}
+            value={this.state.sex}
+          >
             {sexChoices.map((choice) => (
               <option key={choice}>{choice}</option>
             ))}
@@ -95,6 +112,7 @@ class NewClientForm extends Component {
             type="email"
             required
             onChange={this.changeState}
+            value={this.state.email}
           ></Input>
         </FormGroup>
 
@@ -104,6 +122,7 @@ class NewClientForm extends Component {
             name="phone"
             type="tel"
             onChange={this.changeState}
+            value={this.state.phone}
           ></Input>
         </FormGroup>
 

@@ -1,3 +1,5 @@
+/* Author: Vasil Poposki,  xpopos00*/
+
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
@@ -17,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 import "./AuthService.css";
 
 async function login(username, password) {
+  /* If successful, return token from the backend. */
   return axios
     .post(AUTH_URL + "login/", {
       username,
@@ -32,6 +35,7 @@ async function login(username, password) {
 }
 
 function setIsUserTrainer(username) {
+  /* Get user role information and store it in the browser local storage. */
   return axios
     .get(AUTH_URL + "user-is-trainer/", {
       params: {
@@ -45,6 +49,7 @@ function setIsUserTrainer(username) {
 }
 
 export default function Login({ setToken }) {
+  /* Login component. Stores username and password in the state. */
   const nav = useNavigate();
 
   const [username, setUserName] = useState();

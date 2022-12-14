@@ -36,7 +36,6 @@ class WorkoutExercise(models.Model):
         Workout, related_name="exercises", on_delete=models.CASCADE
     )
 
-    # TODO break beetween exercises
     name = models.CharField(max_length=255)
     num_of_sets = models.IntegerField(null=True, blank=True)
     num_of_reps = models.IntegerField(null=True, blank=True)

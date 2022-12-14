@@ -8,7 +8,6 @@ from rest_framework.response import Response
 from .models import Client, ClientMeasurement
 from .serializers import (
     ClientMeasurementSerializer,
-    ClientPhotoSerializer,
     ClientSerializer,
     GetClientSerializer,
 )
@@ -22,7 +21,8 @@ def clients_list(request):
         return Response(serializer.data)
 
     if request.method == "POST":
-        serializer = ClientSerializer(data=request.data, context={"request": request})
+        serializer = ClientSerializer(
+            data=request.data, context={"request": request})
         if serializer.is_valid():
             serializer.save()
             return Response(status=status.HTTP_201_CREATED)
@@ -52,17 +52,6 @@ def clients_detail(request, client_id):
     if request.method == "DELETE":
         client.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-@api_view(["POST"])
-@parser_classes([MultiPartParser, FormParser])
-def client_upload_photo(request):
-    if request.method == "POST":
-        serializer = ClientPhotoSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(["GET"])
@@ -96,10 +85,12 @@ def workout_client_stats(request):
 def measurement_list(request):
     if request.method == "GET":
         if request.user.is_client:
-            measurements = ClientMeasurement.objects.filter(client__user=request.user)
+            measurements = ClientMeasurement.objects.filter(
+                client__user=request.user)
         else:  # trainer
             client_id = int(request.query_params.get("id"))
-            measurements = ClientMeasurement.objects.filter(client_id=client_id)
+            measurements = ClientMeasurement.objects.filter(
+                client_id=client_id)
         serializer = ClientMeasurementSerializer(measurements, many=True)
         return Response(serializer.data)
 
@@ -120,9 +111,6 @@ def client_personal_info(request):
         if request.user.is_client:
             serializer = GetClientSerializer(request.user.client)
         else:  # trainer
-            print(
-                "HEREEEE",
-            )
             client_id = int(request.query_params.get("id"))
             try:
                 client = Client.objects.get(id=client_id)

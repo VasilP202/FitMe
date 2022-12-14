@@ -19,7 +19,7 @@ from .serializers import (
 @api_view(["GET", "POST"])
 def workouts_list(request):
     if request.method == "GET":
-        workouts = []  # TODO custom serializers for 2 types of users
+        workouts = []
         date = get_date(request.query_params.get("date"))
         if request.user.is_trainer:
             workouts = Workout.objects.filter(trainer=request.user.trainer).by_date(

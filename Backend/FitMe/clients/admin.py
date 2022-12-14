@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Client, ClientMeasurement, TestClientPhoto
+from .models import Client, ClientMeasurement
 
 
 @admin.register(Client)
@@ -30,8 +30,3 @@ class ClientMeasurementAdmin(admin.ModelAdmin):
         "date",
         "weight",
     ]
-
-
-@admin.register(TestClientPhoto)
-class ClientPhotoAdmin(admin.ModelAdmin):
-    list_display = ["client", "image_path", "created_at"]

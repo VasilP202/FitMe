@@ -1,11 +1,16 @@
 import { Component } from "react";
-import { Table,Col, Row, Modal, ModalHeader, ModalBody, Button } from "reactstrap";
+import {
+  Table,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  Button,
+} from "reactstrap";
 import axios from "axios";
 import { API_URL } from "../constants";
 import { Container } from "reactstrap";
 import StatsModal from "./StatsModal";
 import NewClientForm from "./NewClientForm";
-import { MdOutlineAddCircle } from "react-icons/md";
 
 class Clients extends Component {
   state = {
@@ -13,7 +18,7 @@ class Clients extends Component {
     statsModal: false,
     statsModalClientId: 0,
     editModal: false,
-    editID: 0,    
+    editID: 0,
   };
 
   componentDidMount() {
@@ -44,16 +49,14 @@ class Clients extends Component {
   }
 
   deleteClient = (clientId) => {
-    // TODO Potvrdit smazani
-    axios
-      .delete(API_URL + "clients/" + clientId + "/")
-      .then(() => console.log("Deleted"));
+    axios.delete(API_URL + "clients/" + clientId + "/");
+    window.location.reload(false);
   };
-  
-  Edit(clientId){
+
+  Edit(clientId) {
     return clientId === this.state.editID;
   }
-  
+
   toggleUpdateClient = this.toggleUpdateClient.bind(this);
   toggleUpdateClient(clientId) {
     const newClientId = this.state.editModal === false ? clientId : 0;
@@ -64,19 +67,14 @@ class Clients extends Component {
     });
   }
 
-  
   updateClient = (clientId) => {
-    
-    axios
-      .put(API_URL + "clients/" + clientId + '/');
-       
+    axios.put(API_URL + "clients/" + clientId + "/");
   };
- 
+
   render() {
     return (
       <Container style={{ marginTop: "100px" }}>
         <h2>My clients</h2>
-        {/* TODO - Tabulka (jako WorkoutSummaryList ) */}
         <Table hover className="Table">
           <thead>
             <tr>
@@ -86,50 +84,73 @@ class Clients extends Component {
               <th>Phone</th>
               <th>Email</th>
               <th>Client Stats</th>
-              <th>Client Delete</th>
-              <th>Client Update</th>
+              <th>Update client</th>
+              <th>Delete client</th>
             </tr>
           </thead>
-          <tbody>{
-            (
-              this.state.clients.map((client) => (
-                <tr>
-                  <td>{client.first_name} {client.last_name}</td>
-                  <td>{client.sex}</td>
-                  <td>{client.birth_date}</td>
-                  <td>{client.phone}</td>
-                  <td>{client.email}</td>
-                  <td><Button onClick={() => this.toggle(client.pk)}>Stats</Button>
-                      <Modal
-                        style={{ maxWidth: "700px", width: "100%" }}
-                        isOpen={this.isOpen(client.pk)}
-                        toggle={this.toggle}
-                      >
-                        <ModalHeader toggle={this.toggle}>
-                        Statistic of client
-                        </ModalHeader>
-                        <ModalBody>
-                          <StatsModal toggle={this.toggle} clientId={client.pk} />
-                        </ModalBody>
-                      </Modal></td>
-                  <td><Button onClick={() => { if (window.confirm('Are you sure you wish to delete this client?')) this.deleteClient(client.pk) } }> Delete</Button></td>
-                  
-                  <td><Button onClick={() => this.toggleUpdateClient(client.pk)}>Update</Button>
-                  <Modal isOpen={this.Edit(client.pk)} toggle={this.toggleUpdateClient}>
-                    <ModalHeader toggle={this.toggleUpdateClient}>Edit Client</ModalHeader>
+          <tbody>
+            {this.state.clients.map((client) => (
+              <tr>
+                <td>
+                  {client.first_name} {client.last_name}
+                </td>
+                <td>{client.sex}</td>
+                <td>{client.birth_date}</td>
+                <td>{client.phone}</td>
+                <td>{client.email}</td>
+                <td>
+                  <Button color="info" onClick={() => this.toggle(client.pk)}>Stats</Button>
+                  <Modal
+                    style={{ maxWidth: "700px", width: "100%" }}
+                    isOpen={this.isOpen(client.pk)}
+                    toggle={this.toggle}
+                  >
+                    <ModalHeader toggle={this.toggle}>
+                      Statistic of client
+                    </ModalHeader>
                     <ModalBody>
-                      <NewClientForm toggle={this.toggleUpdateClient} client={client} />
+                      <StatsModal toggle={this.toggle} clientId={client.pk} />
                     </ModalBody>
                   </Modal>
-                  </td>
-                </tr>
-              
-            ))
-            )}
-          </tbody>   
-
+                </td>
+                <td>
+                  <Button color="secondary" onClick={() => this.toggleUpdateClient(client.pk)}>
+                    Update
+                  </Button>
+                  <Modal
+                    isOpen={this.Edit(client.pk)}
+                    toggle={this.toggleUpdateClient}
+                  >
+                    <ModalHeader toggle={this.toggleUpdateClient}>
+                      Edit Client
+                    </ModalHeader>
+                    <ModalBody>
+                      <NewClientForm
+                        toggle={this.toggleUpdateClient}
+                        client={client}
+                      />
+                    </ModalBody>
+                  </Modal>
+                </td>
+                <td>
+                  <Button color="danger" 
+                    onClick={() => {
+                      if (
+                        window.confirm(
+                          "Are you sure you wish to delete this client?"
+                        )
+                      )
+                        this.deleteClient(client.pk);
+                    }}
+                  >
+                    {" "}
+                    Delete
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </Table>
-                
       </Container>
     );
   }

@@ -1,10 +1,12 @@
+/* Author: Vasil Poposki,  xpopos00*/
+
 import React, { Component } from "react";
-import { Col, Row, Button, Modal, ModalHeader, ModalBody } from "reactstrap";
+import { Col, Row, Modal, ModalHeader, ModalBody } from "reactstrap";
 import { MdOutlineAddCircle } from "react-icons/md";
 import NewMeasurement from "./NewMeasurement";
-import NewPicture from "./NewPicture";
 
 class ClientForms extends Component {
+  /* Client forms section component. Provides client form modals. */
   state = {
     modal: false,
     modal2: false,
@@ -44,23 +46,6 @@ class ClientForms extends Component {
             </ModalBody>
           </Modal>
         </Col>
-        <Col xs="4" sm="4">
-          <div className="form-add-inline">
-            <MdOutlineAddCircle
-              className="form-add-icon"
-              onClick={this.toggle2}
-            />
-            <p>New progress photos</p>
-          </div>
-        <Modal isOpen={this.state.modal2} toggle={this.toggle2}>
-            <ModalHeader toggle={this.toggle2}>
-              Add new picture
-            </ModalHeader>
-            <ModalBody>
-              <NewPicture toggle={this.toggle2} />
-            </ModalBody>
-          </Modal>
-          </Col>
       </Row>
     );
   }

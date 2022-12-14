@@ -1,3 +1,5 @@
+/* Author: Vasil Poposki,  xpopos00*/
+
 import axios from "axios";
 import { Component } from "react";
 import { Form, FormGroup, Button, Input, Label, Row, Col } from "reactstrap";
@@ -16,6 +18,7 @@ const workoutTypeOptions = [
 ];
 
 class NewWorkoutForm extends Component {
+  /* Workout form. Used by trainer to schedule new workout with the client. */
   state = {
     clients: [],
     clientId: 0,
@@ -33,6 +36,7 @@ class NewWorkoutForm extends Component {
   };
 
   componentDidMount() {
+    /* Get trainer's clients. */
     const tokenString = localStorage.getItem("token");
     const accessToken = JSON.parse(tokenString)?.access;
     axios
@@ -51,6 +55,8 @@ class NewWorkoutForm extends Component {
   };
 
   addNewWorkout = (e) => {
+    /* Post form data for a new workout. */
+
     e.preventDefault();
 
     let data = {
@@ -83,6 +89,7 @@ class NewWorkoutForm extends Component {
   };
 
   handleAddNewExercise = () => {
+    /* Add new nested exercise form to a workout form. */
     const newExercise = {
       name: "",
       num_of_sets: null,

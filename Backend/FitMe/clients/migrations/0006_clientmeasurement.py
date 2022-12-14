@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("clients", "0005_testclientphoto"),
+        ("clients", "0003_remove_client_client_user_client_trainer_client_user"),
     ]
 
     operations = [
