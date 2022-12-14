@@ -1,2 +1,2 @@
 # FitMe
-Internal application for personal trainers enabling client management and an overview of their cooperation.
+Internal application for personal trainers enabling training planning, client management and an overview of cooperation with clients.
