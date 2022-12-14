@@ -1,15 +1,19 @@
 import { Component } from "react";
-import { Col, Row, Modal, ModalHeader, ModalBody } from "reactstrap";
+import { Table,Col, Row, Modal, ModalHeader, ModalBody, Button } from "reactstrap";
 import axios from "axios";
 import { API_URL } from "../constants";
 import { Container } from "reactstrap";
 import StatsModal from "./StatsModal";
+import NewClientForm from "./NewClientForm";
+import { MdOutlineAddCircle } from "react-icons/md";
 
 class Clients extends Component {
   state = {
     clients: [],
     statsModal: false,
     statsModalClientId: 0,
+    editModal: false,
+    editID: 0,    
   };
 
   componentDidMount() {
@@ -34,6 +38,7 @@ class Clients extends Component {
       statsModalClientId: newClientId,
     });
   }
+
   isOpen(clientId) {
     return clientId === this.state.statsModalClientId;
   }
@@ -44,39 +49,87 @@ class Clients extends Component {
       .delete(API_URL + "clients/" + clientId + "/")
       .then(() => console.log("Deleted"));
   };
-  updateClient = (clientId) => {
-    //axios.put()
-  };
+  
+  Edit(clientId){
+    return clientId === this.state.editID;
+  }
+  
+  toggleUpdateClient = this.toggleUpdateClient.bind(this);
+  toggleUpdateClient(clientId) {
+    const newClientId = this.state.editModal === false ? clientId : 0;
 
+    this.setState({
+      editModal: !this.state.editModal,
+      editID: newClientId,
+    });
+  }
+
+  
+  updateClient = (clientId) => {
+    
+    axios
+      .put(API_URL + "clients/" + clientId + '/');
+       
+  };
+ 
   render() {
     return (
       <Container style={{ marginTop: "100px" }}>
         <h2>My clients</h2>
         {/* TODO - Tabulka (jako WorkoutSummaryList ) */}
-        <div>
-          {this.state.clients.map((client) => (
-            <div>
-              <p>{client.first_name + " " + client.last_name} </p>
-              <button onClick={() => this.deleteClient(client.pk)}>
-                Delete
-              </button>
-              <button onClick={() => this.toggle(client.pk)}>Stats</button>
-              <Modal
-                style={{ maxWidth: "700px", width: "100%" }}
-                isOpen={this.isOpen(client.pk)}
-                toggle={this.toggle}
-              >
-                <ModalHeader toggle={this.toggle}>
-                  Schedule new training session with your client
-                </ModalHeader>
-                <ModalBody>
-                  <StatsModal toggle={this.toggle} clientId={client.pk} />
-                </ModalBody>
-              </Modal>
-              {/* TODO Stats - Statistika klienta Stats.js */}
-            </div>
-          ))}
-        </div>
+        <Table hover className="Table">
+          <thead>
+            <tr>
+              <th>Client</th>
+              <th>Sex</th>
+              <th>Birth Date</th>
+              <th>Phone</th>
+              <th>Email</th>
+              <th>Client Stats</th>
+              <th>Client Delete</th>
+              <th>Client Update</th>
+            </tr>
+          </thead>
+          <tbody>{
+            (
+              this.state.clients.map((client) => (
+                <tr>
+                  <td>{client.first_name} {client.last_name}</td>
+                  <td>{client.sex}</td>
+                  <td>{client.birth_date}</td>
+                  <td>{client.phone}</td>
+                  <td>{client.email}</td>
+                  <td><Button onClick={() => this.toggle(client.pk)}>Stats</Button>
+                      <Modal
+                        style={{ maxWidth: "700px", width: "100%" }}
+                        isOpen={this.isOpen(client.pk)}
+                        toggle={this.toggle}
+                      >
+                        <ModalHeader toggle={this.toggle}>
+                        Statistic of client
+                        </ModalHeader>
+                        <ModalBody>
+                          <StatsModal toggle={this.toggle} clientId={client.pk} />
+                        </ModalBody>
+                      </Modal></td>
+                  <td><Button onClick={() => { if (window.confirm('Are you sure you wish to delete this client?')) this.deleteClient(client.pk) } }> Delete</Button></td>
+                  
+                  <td><Button onClick={() => this.toggleUpdateClient(client.pk)}>Update</Button>
+                  <Modal isOpen={this.Edit(client.pk)} toggle={this.toggleUpdateClient}>
+                    <ModalHeader toggle={this.toggleUpdateClient}>Edit Client</ModalHeader>
+                    <ModalBody>
+                      <NewClientForm toggle={this.toggleUpdateClient} client={client} />
+                    </ModalBody>
+                  </Modal>
+                  </td>
+                </tr>
+              
+            ))
+            )}
+          </tbody>   
+
+        </Table>
+                
       </Container>
     );
   }
