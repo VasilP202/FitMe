@@ -1,11 +1,7 @@
+/*Author: Michal Polonec, xpolon02 */
+
 import { Component } from "react";
-import {
-  Table,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Button,
-} from "reactstrap";
+import { Table, Modal, ModalHeader, ModalBody, Button } from "reactstrap";
 import axios from "axios";
 import { API_URL } from "../constants";
 import { Container } from "reactstrap";
@@ -13,6 +9,7 @@ import StatsModal from "./StatsModal";
 import NewClientForm from "./NewClientForm";
 
 class Clients extends Component {
+  /* Clients component. Renders the table of all clients for the trainer. */
   state = {
     clients: [],
     statsModal: false,
@@ -99,7 +96,9 @@ class Clients extends Component {
                 <td>{client.phone}</td>
                 <td>{client.email}</td>
                 <td>
-                  <Button color="info" onClick={() => this.toggle(client.pk)}>Stats</Button>
+                  <Button color="info" onClick={() => this.toggle(client.pk)}>
+                    Stats
+                  </Button>
                   <Modal
                     style={{ maxWidth: "700px", width: "100%" }}
                     isOpen={this.isOpen(client.pk)}
@@ -114,7 +113,10 @@ class Clients extends Component {
                   </Modal>
                 </td>
                 <td>
-                  <Button color="secondary" onClick={() => this.toggleUpdateClient(client.pk)}>
+                  <Button
+                    color="secondary"
+                    onClick={() => this.toggleUpdateClient(client.pk)}
+                  >
                     Update
                   </Button>
                   <Modal
@@ -133,7 +135,8 @@ class Clients extends Component {
                   </Modal>
                 </td>
                 <td>
-                  <Button color="danger" 
+                  <Button
+                    color="danger"
                     onClick={() => {
                       if (
                         window.confirm(
