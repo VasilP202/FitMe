@@ -59,9 +59,6 @@ class Header extends Component {
               <NavLink tag={Link} to="/clients" >Clients</NavLink>
           </NavItem>
           <NavItem>
-              <NavLink tag={Link} to="/">Workouts</NavLink>
-          </NavItem>
-          <NavItem>
               <NavLink tag={Link} to="/stats">Stats</NavLink>
           </NavItem>
         </Nav>

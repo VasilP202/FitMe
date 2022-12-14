@@ -1,12 +1,11 @@
 from datetime import datetime, timedelta
 
+from clients.enums import SexOptions
+from clients.models import Client
 from dateutil.relativedelta import relativedelta
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models import Count
-
-from clients.enums import SexOptions
-from clients.models import Client
 from workouts.managers import WorkoutQuerySet
 
 
@@ -110,8 +109,4 @@ class Trainer(models.Model):
         return self.workouts.filter(updated_at__gte=one_year).count()
 
     def get_annotate_by_workout_type(self) -> "WorkoutQuerySet":
-        return (
-            self.workouts.filter()
-            .values("type")
-            .annotate(count=Count("type"))
-        )
+        return self.workouts.filter().values("type").annotate(count=Count("type"))

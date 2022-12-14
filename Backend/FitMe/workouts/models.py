@@ -1,5 +1,4 @@
 from django.db import models
-
 from workouts.managers import WorkoutQuerySet
 
 from .enums import WorkoutTypeOptions

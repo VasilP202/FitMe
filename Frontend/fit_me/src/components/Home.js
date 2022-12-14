@@ -115,6 +115,7 @@ class Home extends Component {
                 datetime={this.state.datetime}
                 onToggleWorkoutDone={this.toggleWorkoutDone.bind(this)}
                 onToggleClientCame={this.toggleClientCame.bind(this)}
+                isTrainer={isTrainer}
               />
             </Col>
             <Col xs="auto" sm="auto">
