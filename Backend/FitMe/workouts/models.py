@@ -27,6 +27,9 @@ class Workout(models.Model):
 
     objects = WorkoutQuerySet.as_manager()
 
+    class Meta:
+        ordering = ["time"]
+
     def __str__(self):
         return str(self.client) + " " + self.type
 
