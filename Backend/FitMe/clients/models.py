@@ -4,7 +4,6 @@ from typing import Optional
 from dateutil.relativedelta import relativedelta
 from django.db import models
 from django.db.models import Count
-
 from workouts.managers import WorkoutQuerySet
 
 from .enums import SexOptions
@@ -58,34 +57,22 @@ class Client(models.Model):
     def get_workouts_count_this_month(self) -> int:
         now = datetime.now()
         month_first = datetime(month=now.month, year=now.year, day=1)
-        return self.workouts.filter(
-            updated_at__gte=month_first
-        ).count()
+        return self.workouts.filter(updated_at__gte=month_first).count()
 
     def get_workouts_count_three_months(self) -> int:
         months_three = datetime.now() - relativedelta(months=3)
-        return self.workouts.filter(
-            updated_at__gte=months_three
-        ).count()
+        return self.workouts.filter(updated_at__gte=months_three).count()
 
     def get_workouts_count_six_months(self) -> int:
         months_six = datetime.now() - relativedelta(months=6)
-        return self.workouts.filter(
-            updated_at__gte=months_six
-        ).count()
+        return self.workouts.filter(updated_at__gte=months_six).count()
 
     def get_workouts_count_year(self) -> int:
         months_twelve = datetime.now() - relativedelta(months=12)
-        return self.workouts.filter(
-            updated_at__gte=months_twelve
-        ).count()
+        return self.workouts.filter(updated_at__gte=months_twelve).count()
 
     def get_annotate_by_workout_type(self) -> "WorkoutQuerySet":
-        return (
-            self.workouts.filter()
-            .values("type")
-            .annotate(count=Count("type"))
-        )
+        return self.workouts.filter().values("type").annotate(count=Count("type"))
 
 
 class ClientPhotoSet(models.Model):

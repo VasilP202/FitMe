@@ -48,20 +48,24 @@ tr td:first-child {
   background-color: #ffcccb;
 }
 #td-client-came {
-  padding-left: 20px;
   padding-bottom: 0;
 }
 
 .fa-icon {
   color: red;
-  cursor: hand;
-  width: 20;
-  height: 20;
+  font-size: 20px;
+
 }
 .fa-icon:hover {
-  font-size: 1.8em;
+  font-size: 1em;
   transition-property: all;
   transition: 0.8s ease-out;
+}
+.detail-icon {
+  font-size: 25px;
+}
+.detail-icon:hover {
+  color: #21565c;
 }
 #forms-row {
   padding: 30px;
@@ -99,13 +103,13 @@ tr td:first-child {
   transition: 0.3s;
 }
 #submit-new-workout-button {
-  margin:10px;
+  margin: 10px;
 }
 #workout-form-exercise-counter p {
   margin-top: 10px;
   margin-bottom: 0;
 }
-#remove-workout-form-icon svg{
+#remove-workout-form-icon svg {
   margin-top: 10px;
   padding-right: 10px;
   float: right;

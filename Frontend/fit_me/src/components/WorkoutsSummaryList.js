@@ -1,7 +1,17 @@
 import React, { Component } from "react";
-import { Table, Form, FormGroup, Input, Label, Container } from "reactstrap";
-import "../App.css";
+import {
+  Table,
+  Container,
+  Modal,
+  ModalBody,
+  ModalHeader,
+} from "reactstrap";
 import { FaTimes, FaUndo } from "react-icons/fa";
+import { BsThreeDots } from "react-icons/bs";
+import { BiDetail } from "react-icons/bi";
+
+import WorkoutExercisesList from "./WorkoutExercisesList.js";
+import WorkoutPopover from "./WorkoutPopover.js";
 
 function getTime(datetime) {
   return datetime.substr(11, 5);
@@ -23,9 +33,6 @@ function getDateTitle(datetime) {
   else if (today.getTime() > datetimeCopy.getTime())
     title = "Completed Workouts: ";
 
-  /* const timezoneOffset = new Date().getTimezoneOffset();
-  console.log(timezoneOffset); */
-
   var d = datetimeString.substr(8, 2);
   var m = datetimeString.substr(5, 2);
   var y = datetimeString.substr(0, 4);
@@ -34,6 +41,28 @@ function getDateTitle(datetime) {
 }
 
 class WorkoutsSummaryList extends Component {
+  toggleExercises = this.toggleExercises.bind(this);
+  state = {
+    exercisesModal: false,
+    exercisesModalWorkoutId: 0,
+    popoverOpen: false
+  };
+  togglePopover() {
+    this.setState({
+      popoverOpen: !this.state.popoverOpen
+    });
+  }
+  toggleExercises(workoutId) {
+    const newWorkoutId = this.state.exercisesModal === false ? workoutId : 0;
+    this.setState({
+      exercisesModal: !this.state.exercisesModal,
+      exercisesModalWorkoutId: newWorkoutId,
+    });
+  }
+  isOpenExercisesModal(workoutId) {
+    return workoutId === this.state.exercisesModalWorkoutId;
+  }
+
   render() {
     return (
       <Container id="summary">
@@ -46,7 +75,8 @@ class WorkoutsSummaryList extends Component {
               <th>Time</th>
               <th>Duration</th>
               <th>Detail</th>
-              <th>Client absent</th>
+              <th>{this.props.isTrainer=="true"? 'Client absent': 'Absent'}</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -67,15 +97,18 @@ class WorkoutsSummaryList extends Component {
                   }`}
                   onDoubleClick={() => this.props.onToggleWorkoutDone(workout)}
                 >
-                  {" "}
-                  {/* TODO hyperlink to client - workout.client returns client PK */}
-                  {/* TODO table with <Row> <Col> */}
                   <td>{workout.client_full_name}</td>
                   <td>{workout.type}</td>
                   <td>{getTime(workout.time)}</td>
-                  <td>{workout.duration ? workout.duration + "min" : "-"}</td>
-                  <td>{workout.description || "-"}</td>
-                  <td id="td-client-came">
+                  <td>{workout.duration ? workout.duration + " min" : "-"}</td>
+                  <td align="center">
+                    <BiDetail
+                      className="detail-icon"
+                      onClick={() => this.toggleExercises(workout.pk)}
+                    />
+                    &nbsp;&nbsp;
+                  </td>
+                  <td id="td-client-came" align="center">
                     {workout.client_came === null || workout.client_came ? (
                       <FaTimes
                         className="fa-icon"
@@ -89,6 +122,28 @@ class WorkoutsSummaryList extends Component {
                       />
                     )}
                   </td>
+                  {this.props.isTrainer=="true" &&
+                  <td>
+                    <BsThreeDots
+                      id={"Popover-" + workout.pk}
+                      style={{ fontSize: "30px" }}
+                      onClick={this.togglePopover}
+                    />
+                  <WorkoutPopover key={workout.pk} id={workout.pk} workout={workout} />
+                  </td>}
+                  <Modal
+                    style={{ maxWidth: "700px", width: "100%" }}
+                    isOpen={this.isOpenExercisesModal(workout.pk)}
+                    toggle={this.toggleExercises}
+                  >
+                    <ModalHeader>Exercises</ModalHeader>
+                    <ModalBody>
+                      <WorkoutExercisesList
+                        toggle={this.toggleExercises}
+                        exercises={workout.exercises}
+                      />
+                    </ModalBody>
+                  </Modal>
                 </tr>
               ))
             )}
@@ -98,5 +153,7 @@ class WorkoutsSummaryList extends Component {
     );
   }
 }
+
+
 
 export default WorkoutsSummaryList;

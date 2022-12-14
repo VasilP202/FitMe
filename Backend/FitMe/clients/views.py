@@ -22,8 +22,7 @@ def clients_list(request):
         return Response(serializer.data)
 
     if request.method == "POST":
-        serializer = ClientSerializer(
-            data=request.data, context={"request": request})
+        serializer = ClientSerializer(data=request.data, context={"request": request})
         if serializer.is_valid():
             serializer.save()
             return Response(status=status.HTTP_201_CREATED)
@@ -97,12 +96,10 @@ def workout_client_stats(request):
 def measurement_list(request):
     if request.method == "GET":
         if request.user.is_client:
-            measurements = ClientMeasurement.objects.filter(
-                client__user=request.user)
+            measurements = ClientMeasurement.objects.filter(client__user=request.user)
         else:  # trainer
             client_id = int(request.query_params.get("id"))
-            measurements = ClientMeasurement.objects.filter(
-                client_id=client_id)
+            measurements = ClientMeasurement.objects.filter(client_id=client_id)
         serializer = ClientMeasurementSerializer(measurements, many=True)
         return Response(serializer.data)
 
@@ -123,7 +120,9 @@ def client_personal_info(request):
         if request.user.is_client:
             serializer = GetClientSerializer(request.user.client)
         else:  # trainer
-            print("HEREEEE", )
+            print(
+                "HEREEEE",
+            )
             client_id = int(request.query_params.get("id"))
             try:
                 client = Client.objects.get(id=client_id)
