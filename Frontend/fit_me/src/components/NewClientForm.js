@@ -1,4 +1,5 @@
-/* Author: Vasil Poposki, xpopos00*/
+/* Author: Vasil Poposki, xpopos00
+           Michal Polonec, xpolon02*/
 
 import axios from "axios";
 import { Component } from "react";
