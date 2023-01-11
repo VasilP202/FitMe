@@ -53,7 +53,7 @@ class NewClientForm extends Component {
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then(this.props.toggle());
-    window.location.reload(false);
+    //window.location.reload(false);
   };
 
   render() {

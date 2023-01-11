@@ -46,8 +46,11 @@ class Clients extends Component {
   }
 
   deleteClient = (clientId) => {
-    axios.delete(API_URL + "clients/" + clientId + "/");
-    window.location.reload(false);
+    axios.delete(API_URL + "clients/" + clientId + "/").then(
+      this.state.clients = this.componentDidMount()
+    );
+    //window.location.reload(false);
+    
   };
 
   Edit(clientId) {
@@ -116,6 +119,8 @@ class Clients extends Component {
                   <Button
                     color="secondary"
                     onClick={() => this.toggleUpdateClient(client.pk)}
+                    onFocusCapture={() => this.setState.clients = this.componentDidMount()}
+
                   >
                     Update
                   </Button>
