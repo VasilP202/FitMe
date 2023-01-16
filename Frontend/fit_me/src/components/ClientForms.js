@@ -9,20 +9,12 @@ class ClientForms extends Component {
   /* Client forms section component. Provides client form modals. */
   state = {
     modal: false,
-    modal2: false,
   };
 
   toggle = this.toggle.bind(this);
   toggle() {
     this.setState({
       modal: !this.state.modal,
-    });
-  }
-
-  toggle2 = this.toggle2.bind(this);
-  toggle2() {
-    this.setState({
-      modal2: !this.state.modal2,
     });
   }
 

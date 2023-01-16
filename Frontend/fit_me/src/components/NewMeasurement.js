@@ -35,8 +35,9 @@ class NewMeasurement extends Component {
       {
         headers: { Authorization: `Bearer ${accessToken}` },
       }
-    );
+    )
     this.props.toggle();
+    
   };
   render() {
     /* A function that renders something to the screen */

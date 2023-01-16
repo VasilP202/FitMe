@@ -19,6 +19,9 @@ import axios from "axios";
 import { API_URL } from "../constants";
 import { Line, Bar } from "react-chartjs-2";
 import { Chart as chartjs } from "chart.js/auto";
+import { Col, Row, Modal, ModalHeader, ModalBody } from "reactstrap";
+import { MdOutlineAddCircle } from "react-icons/md";
+import NewMeasurement from "./NewMeasurement";
 
 class Stats extends Component {
   state = {
@@ -27,6 +30,13 @@ class Stats extends Component {
     personalInfo: {},
   };
 
+  toggle = this.toggle.bind(this);
+  toggle() {
+    this.setState({
+      modal: !this.state.modal,
+    });
+  }
+  
   componentDidMount() {
     const tokenString =
       localStorage.getItem("token"); /* Storage of access rights */
@@ -47,6 +57,7 @@ class Stats extends Component {
       .then((response) => {
         this.setState({ measurements: response.data });
       });
+      
 
     axios
       .get(API_URL + "clients/workout-stats/", {
@@ -88,9 +99,28 @@ class Stats extends Component {
     }
     return (
       <section
-        style={{ backgroundColor: "#fff", position: "relative", top: "80px" }}
+        style={{ backgroundColor: "#fff", position: "relative", top: "50px" }}
       >
         <MDBContainer className="py-5">
+          <Row id="forms-row">
+            <Col xs="4" sm="4">
+              <div className="form-add-inline">
+                <MdOutlineAddCircle
+                  className="form-add-icon"
+                  onClick={this.toggle}
+                />
+                <p>New measurement</p>
+              </div>
+              <Modal isOpen={this.state.modal} toggle={this.toggle} onExit={this.componentDidMount()}>
+                <ModalHeader toggle={this.toggle}>
+                  Add new weight measurement
+                </ModalHeader>
+                <ModalBody>
+                  <NewMeasurement toggle={this.toggle} />
+                </ModalBody>
+              </Modal>
+            </Col>
+          </Row>
           <MDBRow>
             <MDBCard className="mb-4">
               <MDBCardBody className="text-center">
