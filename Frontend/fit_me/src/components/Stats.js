@@ -82,6 +82,27 @@ class Stats extends Component {
         this.setState({ personalInfo: response.data });
       });
   }
+  refreshMeasurements() {
+    const tokenString =
+      localStorage.getItem("token"); /* Storage of access rights */
+    const accessToken = JSON.parse(tokenString)?.access;
+
+    let params = {};
+    if (this.props.clientId) {
+      params["id"] = this.props.clientId;
+    }
+
+    axios
+      .get(API_URL + "clients/measurement-list/", {
+        /* DB request for user measurements */ params: params,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((response) => {
+        this.setState({ measurements: response.data });
+      });
+  }
   render() {
     /* A function that renders something to the screen */
     const trainer = this.state.personalInfo.trainer;
@@ -111,7 +132,7 @@ class Stats extends Component {
                 />
                 <p>New measurement</p>
               </div>
-              <Modal isOpen={this.state.modal} toggle={this.toggle} onExit={this.componentDidMount()}>
+              <Modal isOpen={this.state.modal} toggle={this.toggle} onExit={this.refreshMeasurements()}>
                 <ModalHeader toggle={this.toggle}>
                   Add new weight measurement
                 </ModalHeader>
